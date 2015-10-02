@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 수정일 수정자 수정내용 ========= ======= ================================================= 
+	2011.9.2 정진오 DeptSchdulManage.selectDeptSchdulManageRetrieve에 SCHDUL_CHARGER_NAME 
+	추가(Daily 조회시 필요) 2011.9.7 이기하 DeptSchdulManage.insertDeptSchdulManage에 schdulChargerName 
+	-> schdulChargerId 컬럼변경 DeptSchdulManage.updateDeptSchdulManage에 schdulChargerName 
+	-> schdulChargerId 컬럼변경 DeptSchdulManage.selectDeptSchdulManageDetail에 EMPLYR_ID 
+	-> ESNTL_ID 컬럼변경 2011.10.05 서준식 보안 취약점 점검사항 반영 $->#변경 -->
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="FloorPlan">
+
+	<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias alias="comDefaultVO" type="egovframework.com.cmm.ComDefaultVO" />
+	<typeAlias alias="FloorPlan" type="egovframework.com.fp.service.FloorPlan" />
+	<typeAlias alias="FloorPlanVo" type="egovframework.com.fp.service.FloorPlanVO" />
+
+	<resultMap id="boardList" class="egovframework.com.fp.service.FloorPlanVO">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="nttId" column="NTT_ID" columnIndex="2"/>
+		<result property="nttSj" column="NTT_SJ" columnIndex="3"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="4"/>
+		<result property="frstRegisterNm" column="FRST_REGISTER_NM" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM" columnIndex="6"/>
+		<result property="inqireCo" column="RDCNT" columnIndex="7"/>
+		<result property="parnts" column="PARNTSCTT_NO" columnIndex="8"/>
+		<result property="replyAt" column="ANSWER_AT" columnIndex="9"/>		
+		<result property="replyLc" column="ANSWER_LC" columnIndex="10"/>
+		<result property="useAt" column="USE_AT" columnIndex="11"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="12"/>
+		<result property="ntceBgnde" column="NTCE_BGNDE" columnIndex="13"/>
+		<result property="ntceEndde" column="NTCE_ENDDE" columnIndex="14"/>
+		<result property="cmtAnswerCnt" column="cmtAnswerCnt" columnIndex="15"/>
+		<result property="nttCn" column="NTT_CN" columnIndex="16"/>
+		
+		<result property="model" column="MODEL" columnIndex="41"/>
+		<result property="rev" column="REV" columnIndex="42"/>
+		<result property="name_01" column="NAME_01" columnIndex="43"/>
+		<result property="name_02" column="NAME_02" columnIndex="44"/>
+		<result property="spec_01" column="SPEC_01" columnIndex="45"/>
+		<result property="spec_02" column="SPEC_02" columnIndex="46"/>
+		<result property="spec_03" column="SPEC_03" columnIndex="47"/>
+		<result property="spec_04" column="SPEC_04" columnIndex="48"/>
+		<result property="size" column="SIZE" columnIndex="49"/>
+		<result property="location" column="LOCATION" columnIndex="50"/>
+		<result property="number" column="NUMBER" columnIndex="51"/>
+		<result property="note" column="NOTE" columnIndex="52"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDT_PNTTM" columnIndex="53"/>
+		<result property="division" column="DIVISION" columnIndex="54"/>
+		<result property="divisionCode" column="DIVISIONCODE" columnIndex="55"/>
+		<result property="divisionNm" column="DIVISIONNM" columnIndex="56"/>
+	</resultMap>
+
+	<resultMap id="boardDetail" class="egovframework.com.fp.service.FloorPlanVO">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="nttId" column="NTT_ID" columnIndex="2"/>
+		<result property="nttSj" column="NTT_SJ" columnIndex="3"/>	
+		<result property="ntcrId" column="NTCR_ID" columnIndex="4"/>
+		<result property="ntcrNm" column="NTCR_NM" columnIndex="5"/>
+		<result property="nttNo" column="NTT_NO" columnIndex="6"/>
+		<result property="nttCn" column="NTT_CN" columnIndex="7"/>
+		<result property="password" column="PASSWORD" columnIndex="8"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="9"/>
+		<result property="frstRegisterNm" column="FRST_REGISTER_NM" columnIndex="10"/>
+		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM" columnIndex="11"/>
+		<result property="ntceBgnde" column="NTCE_BGNDE" columnIndex="12"/>
+		<result property="ntceEndde" column="NTCE_ENDDE" columnIndex="13"/>
+		<result property="inqireCo" column="RDCNT" columnIndex="14"/>
+		<result property="useAt" column="USE_AT" columnIndex="15"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="16"/>
+		<result property="parnts" column="PARNTSCTT_NO" columnIndex="17"/>
+		<result property="replyAt" column="ANSWER_AT" columnIndex="18"/>		
+		<result property="replyLc" column="ANSWER_LC" columnIndex="19"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="19"/>
+		<result property="bbsTyCode" column="BBS_TY_CODE" columnIndex="20"/>
+		<result property="bbsAttrbCode" column="BBS_ATTRB_CODE" columnIndex="21"/>
+		<result property="replyPosblAt" column="REPLY_POSBL_AT" columnIndex="22"/>
+		<result property="fileAtchPosblAt" column="FILE_ATCH_POSBL_AT" columnIndex="23"/>
+		<result property="posblAtchFileNumber" column="ATCH_POSBL_FILE_NUMBER" columnIndex="24"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="25"/>
+		
+		<result property="model" column="MODEL" columnIndex="41"/>
+		<result property="rev" column="REV" columnIndex="42"/>
+		<result property="name_01" column="NAME_01" columnIndex="43"/>
+		<result property="name_02" column="NAME_02" columnIndex="44"/>
+		<result property="spec_01" column="SPEC_01" columnIndex="45"/>
+		<result property="spec_02" column="SPEC_02" columnIndex="46"/>
+		<result property="spec_03" column="SPEC_03" columnIndex="47"/>
+		<result property="spec_04" column="SPEC_04" columnIndex="48"/>
+		<result property="size" column="SIZE" columnIndex="49"/>
+		<result property="location" column="LOCATION" columnIndex="50"/>
+		<result property="number" column="NUMBER" columnIndex="51"/>
+		<result property="note" column="NOTE" columnIndex="52"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDT_PNTTM" columnIndex="53"/>
+		<result property="division" column="DIVISION" columnIndex="54"/>
+		<result property="divisionCode" column="DIVISIONCODE" columnIndex="55"/>
+		<result property="divisionNm" column="DIVISIONNM" columnIndex="56"/>
+		<result property="spec" column="SPEC" columnIndex="57"/>
+		<result property="offset" column="OFFSET" columnIndex="58"/>
+	</resultMap>
+	
+	<resultMap id="sortList" class="egovframework.com.fp.service.FloorPlanVO">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="nttId" column="NTT_ID" columnIndex="2"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="3"/>
+		<result property="parnts" column="PARNTSCTT_NO" columnIndex="4"/>
+		<result property="nttNo" column="NTT_NO" columnIndex="5"/>		
+		<result property="replyLc" column="ANSWER_LC" columnIndex="6"/>
+	</resultMap>
+
+	<resultMap id="guestList" class="egovframework.com.fp.service.FloorPlanVO">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="nttId" column="NTT_ID" columnIndex="2"/>
+		<result property="nttSj" column="NTT_SJ" columnIndex="3"/>
+		<result property="ntcrNm" column="NTCR_NM" columnIndex="4"/>
+		<result property="password" column="PASSWORD" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM" columnIndex="6"/>
+		<result property="nttCn" column="NTT_CN" columnIndex="7"/>
+		<result property="useAt" column="USE_AT" columnIndex="8"/>
+		<result property="frstRegisterNm" column="FRST_REGISTER_NM" columnIndex="9"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="10"/>
+	</resultMap>
+
+	<select id="FloorPlanManageDAO.selectMaxNttId" resultClass="java.lang.Long">
+ 		<![CDATA[
+			SELECT IFNULL(MAX(NTT_ID),0)+1 AS NTT_ID  FROM FLOORPLAN
+ 		]]>
+	</select>
+
+	<insert id="FloorPlanManageDAO.insertBoardArticle" parameterClass="FloorPlan">
+		<selectKey resultClass="java.lang.Long" keyProperty="nttNo">
+			SELECT
+			IFNULL(MAX(SORT_ORDR),0)+1 AS NTT_NO FROM FLOORPLAN
+			WHERE BBS_ID = #bbsId#
+		</selectKey>
+		<![CDATA[
+			INSERT INTO FLOORPLAN
+			(NTT_ID, BBS_ID, NTT_SJ, NTT_CN, SORT_ORDR, 
+			 NTCR_ID, NTCR_NM, PASSWORD, RDCNT, 
+			 NTCE_BGNDE, NTCE_ENDDE, ANSWER_AT,  			   
+			 PARNTSCTT_NO, NTT_NO, ANSWER_LC, ATCH_FILE_ID,
+			 FRST_REGISTER_ID, FRST_REGIST_PNTTM, USE_AT,
+			 DIVISION, MODEL, REV, NAME_01, NAME_02, SPEC, SPEC_01, SPEC_02, SPEC_03, SPEC_04,
+			 SIZE, LOCATION, NUMBER, NOTE, OFFSET
+			 )
+			VALUES
+			( #nttId#, #bbsId#, #nttSj#, #nttCn#, #nttNo#, 
+			  #ntcrId#, #ntcrNm#, #password#, #inqireCo#, 
+			  #ntceBgnde#, #ntceEndde#, #replyAt#, 
+			  #parnts#, 1, #replyLc#, #atchFileId#,
+			  #frstRegisterId#, SYSDATE(), 'Y',
+			  #division#, #model#, #rev#, #name_01#, #name_02#, #spec#, #spec_01#, #spec_02#, #spec_03#, #spec_04#,
+			  #size#, #location#, #number#, #note#, #offset#
+			 )			
+		]]>
+	</insert>
+
+	<insert id="FloorPlanManageDAO.replyBoardArticle" parameterClass="FloorPlan">
+		<selectKey resultClass="java.lang.Long" keyProperty="nttNo">
+			SELECT
+			IFNULL(MAX(NTT_NO),0)+1 AS NTT_NO FROM FLOORPLAN
+			WHERE BBS_ID = #bbsId#
+			AND SORT_ORDR = #sortOrdr#
+		</selectKey>			
+		<![CDATA[
+			INSERT INTO FLOORPLAN
+			(NTT_ID, BBS_ID, NTT_SJ, NTT_CN, SORT_ORDR, 
+			 NTCR_ID, NTCR_NM, PASSWORD, RDCNT, 
+			 NTCE_BGNDE, NTCE_ENDDE, ANSWER_AT,  			   
+			 PARNTSCTT_NO, NTT_NO, ANSWER_LC, ATCH_FILE_ID,
+			 FRST_REGISTER_ID, FRST_REGIST_PNTTM, USE_AT,
+			 DIVISION, MODEL, REV, NAME_01, NAME_02, SPEC, SPEC_01, SPEC_02, SPEC_03, SPEC_04,
+			 SIZE, LOCATION, NUMBER, NOTE, OFFSET
+			 )
+			VALUES
+			( #nttId#, #bbsId#, #nttSj#, #nttCn#, #nttNo#, 
+			  #ntcrId#, #ntcrNm#, #password#, #inqireCo#, 
+			  #ntceBgnde#, #ntceEndde#, #replyAt#, 
+			  #parnts#, 1, #replyLc#, #atchFileId#,
+			  #frstRegisterId#, SYSDATE(), 'Y',
+			  #division#, #model#, #rev#, #name_01#, #name_02#, #spec#, #spec_01#, #spec_02#, #spec_03#, #spec_04#,
+			  #size#, #location#, #number#, #note#, #offset#
+			 )			
+		]]>
+	</insert>
+
+	<select id="FloorPlanManageDAO.selectNoticeListForSort" parameterClass="FloorPlan" resultMap="sortList">
+		<![CDATA[			
+			SELECT
+				a.BBS_ID, a.NTT_ID, a.SORT_ORDR, a.PARNTSCTT_NO, a.NTT_NO, a.ANSWER_LC
+			FROM
+				FLOORPLAN a	
+			WHERE
+				a.BBS_ID = #bbsId#
+			AND
+				a.SORT_ORDR = #sortOrdr#
+			ORDER BY  a.SORT_ORDR DESC, a.NTT_NO ASC	
+		]]>
+	</select>
+
+	<select id="FloorPlanManageDAO.selectBoardArticleList" parameterClass="FloorPlanVO" resultMap="boardList">
+		<![CDATA[
+			SELECT
+				*
+			FROM
+			(
+				SELECT
+					a.NTT_ID, a.NTT_SJ, a.NTT_CN, a.FRST_REGISTER_ID, IFNULL(b.USER_NM, a.NTCR_NM) as FRST_REGISTER_NM,
+					DATE_FORMAT(a.FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM,
+					a.RDCNT, a.PARNTSCTT_NO, a.ANSWER_AT, a.ANSWER_LC, a.USE_AT, a.ATCH_FILE_ID,
+					a.BBS_ID, a.NTCE_BGNDE, a.NTCE_ENDDE,
+					a.DIVISION,
+					(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM002' AND CODE =  a.DIVISION) as DIVISIONNM, 
+					(SELECT CODE FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM002' AND CODE =  a.DIVISION) as DIVISIONCODE,
+					a.MODEL, a.REV, a.name_01, a.name_02, a.SPEC_01, a.SPEC_02, a.SPEC_03, a.SPEC_04, a.SIZE, a.LOCATION, a.NUMBER, a.NOTE,
+					DATE_FORMAT(a.LAST_UPDT_PNTTM, '%Y-%m-%d') as LAST_UPDT_PNTTM,
+					(select count(*) from comtncomment where NTT_ID=a.NTT_ID) as cmtAnswerCnt
+				FROM
+					FLOORPLAN a
+				LEFT OUTER JOIN 
+					COMVNUSERMASTER b
+				ON a.FRST_REGISTER_ID = b.ESNTL_ID 
+				WHERE
+					a.USE_AT = 'Y' and a.BBS_ID = #bbsId# and a.DIVISION = #division#
+				ORDER BY a.SORT_ORDR DESC, a.NTT_NO ASC
+				)
+				AS aliasTable
+			GROUP BY
+				aliasTable.MODEL
+			ORDER BY
+				aliasTable.FRST_REGIST_PNTTM DESC
+		]]>
+		<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.NTT_SJ LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.NTT_CN LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	b.USER_NM LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>				
+		<![CDATA[			
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>
+	</select>
+	
+	<select id="FloorPlanManageDAO.selectBoardArticleListCnt" parameterClass="FloorPlanVO" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT a.MODEL)
+			FROM
+				FLOORPLAN a
+			LEFT OUTER JOIN 
+				COMVNUSERMASTER b
+			ON a.FRST_REGISTER_ID = b.ESNTL_ID 
+			WHERE
+				a.USE_AT = 'Y' and a.BBS_ID = #bbsId# and a.DIVISION = #division#
+		]]>
+		<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.NTT_SJ LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.NTT_CN LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	b.USER_NM LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+	</select>
+	
+	<select id="FloorPlanManageDAO.selectSmallBoardArticleList" parameterClass="FloorPlanVO" resultMap="boardList">
+		<![CDATA[
+			SELECT
+				a.NTT_ID, a.NTT_SJ, a.NTT_CN, a.FRST_REGISTER_ID, IFNULL(b.USER_NM, a.NTCR_NM) as FRST_REGISTER_NM,
+				DATE_FORMAT(a.FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM,
+				a.RDCNT, a.PARNTSCTT_NO, a.ANSWER_AT, a.ANSWER_LC, a.USE_AT, a.ATCH_FILE_ID,
+				a.BBS_ID, a.NTCE_BGNDE, a.NTCE_ENDDE,
+				a.DIVISION,
+				(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM002' AND CODE =  a.DIVISION) as DIVISIONNM, 
+				(SELECT CODE FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM002' AND CODE =  a.DIVISION) as DIVISIONCODE,
+				a.MODEL, a.REV, a.name_01, a.name_02, a.SPEC_01, a.SPEC_02, a.SPEC_03, a.SPEC_04, a.SIZE, a.LOCATION, a.NUMBER, a.NOTE,
+				DATE_FORMAT(a.LAST_UPDT_PNTTM, '%Y-%m-%d') as LAST_UPDT_PNTTM,
+				(select count(*) from comtncomment where NTT_ID=a.NTT_ID) as cmtAnswerCnt
+			FROM
+				FLOORPLAN a
+			LEFT OUTER JOIN 
+				COMVNUSERMASTER b
+			ON a.FRST_REGISTER_ID = b.ESNTL_ID 
+			WHERE
+				a.BBS_ID = #bbsId# and a.MODEL = #model# and a.DIVISION = #division#
+		]]>
+		<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.NTT_SJ LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.NTT_CN LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	b.USER_NM LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>				
+		<![CDATA[			
+			ORDER BY a.SORT_ORDR DESC, NTT_NO ASC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>
+	</select>
+
+	<select id="FloorPlanManageDAO.selectSmallBoardArticleListCnt" parameterClass="FloorPlanVO" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT
+				COUNT(a.NTT_ID)
+			FROM
+				FLOORPLAN a
+			LEFT OUTER JOIN 
+				COMVNUSERMASTER b
+			ON a.FRST_REGISTER_ID = b.ESNTL_ID 
+			WHERE
+				a.BBS_ID = #bbsId# and a.MODEL = #model# and a.DIVISION = #division#
+		]]>
+		<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.NTT_SJ LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.NTT_CN LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	b.USER_NM LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+	</select>
+
+	<select id="FloorPlanManageDAO.selectBoardArticle" parameterClass="FloorPlanVO" resultMap="boardDetail">
+		<![CDATA[
+			SELECT
+				a.NTT_SJ, a.NTCR_ID, a.NTCR_NM, a.NTT_NO, a.NTT_CN,
+				a.PASSWORD, a.FRST_REGISTER_ID, b.USER_NM as FRST_REGISTER_NM,
+				DATE_FORMAT(a.FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM,
+				a.NTCE_BGNDE, a.NTCE_ENDDE, a.RDCNT, 
+				a.USE_AT, a.ATCH_FILE_ID, a.BBS_ID, a.NTT_ID,
+				a.PARNTSCTT_NO, a.ANSWER_AT, a.ANSWER_LC, a.SORT_ORDR,
+				c.BBS_TY_CODE, c.BBS_ATTRB_CODE, c.REPLY_POSBL_AT, 
+				c.FILE_ATCH_POSBL_AT, c.ATCH_POSBL_FILE_NUMBER, c.BBS_NM,
+				a.DIVISION,
+				(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM002' AND CODE =  a.DIVISION) as DIVISIONNM, 
+				(SELECT CODE FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM002' AND CODE =  a.DIVISION) as DIVISIONCODE, 
+				a.MODEL, a.REV, a.name_01, a.name_02,
+				a.SPEC,
+				a.SPEC_01, a.SPEC_02, a.SPEC_03, a.SPEC_04, a.SIZE, a.LOCATION, a.NUMBER, a.NOTE, a.OFFSET,
+				DATE_FORMAT(a.LAST_UPDT_PNTTM, '%Y-%m-%d') as LAST_UPDT_PNTTM
+			FROM
+				FLOORPLAN a
+			LEFT OUTER JOIN 
+				COMVNUSERMASTER b
+			ON a.FRST_REGISTER_ID = b.ESNTL_ID 
+			LEFT OUTER JOIN 
+				FLOORPLANMASTER c
+			ON a.BBS_ID = c.BBS_ID			
+			WHERE
+				a.BBS_ID = #bbsId#	
+			AND
+				a.NTT_ID = #nttId#	
+		]]>
+	</select>
+
+	<update id="FloorPlanManageDAO.updateBoardArticle" parameterClass="FloorPlan">
+ 		<![CDATA[
+			UPDATE FLOORPLAN SET 
+				NTT_SJ = #nttSj#,
+				NTT_CN = #nttCn#, 
+				NTCR_ID = #ntcrId#,
+				NTCR_NM = #ntcrNm#,
+				PASSWORD = #password#,
+				NTCE_BGNDE = #ntceBgnde#,		
+				NTCE_ENDDE = #ntceEndde#,
+				MODEL = #model#,
+				DIVISION = #division#,
+				REV = #rev#,
+				SIZE = #size#,
+				NAME_01 = #name_01#,
+				NAME_02 = #name_02#,
+				SPEC = #spec#,
+				SPEC_01 = #spec_01#,
+				SPEC_02 = #spec_02#,
+				SPEC_03 = #spec_03#,
+				SPEC_04 = #spec_04#,
+				NOTE = #note#,
+				OFFSET = #offset#,
+				NUMBER = #number#,
+				LOCATION = #location#,
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				ATCH_FILE_ID = #atchFileId#,
+				LAST_UPDT_PNTTM = SYSDATE()
+			WHERE BBS_ID = #bbsId#
+			AND NTT_ID = #nttId#
+ 		]]>
+	</update>
+
+	<update id="FloorPlanManageDAO.deleteBoardArticle" parameterClass="FloorPlan">
+ 		<![CDATA[
+			UPDATE FLOORPLAN SET 
+				NTT_SJ = #nttSj#,
+				USE_AT = 'N',
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDT_PNTTM = SYSDATE()
+			WHERE BBS_ID = #bbsId#
+			AND NTT_ID = #nttId#
+ 		]]>
+	</update>
+
+	<select id="FloorPlanManageDAO.selectMaxInqireCo" resultClass="java.lang.Integer" parameterClass="FloorPlanVO">
+ 		<![CDATA[
+			SELECT IFNULL(MAX(RDCNT),0)+1 AS RDCNT FROM FLOORPLAN
+			WHERE BBS_ID = #bbsId#
+			AND NTT_ID = #nttId#
+ 		]]>
+	</select>
+
+	<select id="FloorPlanManageDAO.selectNoticeItemForSort" resultClass="java.lang.Long" parameterClass="FloorPlan">
+ 		<![CDATA[
+			SELECT
+				IFNULL(MAX(NTT_NO),0)+1 AS NTT_NO
+			FROM
+				FLOORPLAN	
+			WHERE
+				BBS_ID = #bbsId#
+			AND
+				SORT_ORDR = #sortOrdr#
+			AND 
+				NTT_ID = #nttId#	
+ 		]]>
+	</select>
+
+	<update id="FloorPlanManageDAO.updateInqireCo" parameterClass="FloorPlanVO">
+ 		<![CDATA[
+			UPDATE FLOORPLAN SET 
+				RDCNT = #inqireCo#,
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDT_PNTTM = SYSDATE()
+			WHERE BBS_ID = #bbsId#
+			AND NTT_ID = #nttId#
+ 		]]>
+	</update>
+
+	<update id="FloorPlanManageDAO.updateSortOrder" parameterClass="FloorPlanVO">
+ 		<![CDATA[
+			UPDATE FLOORPLAN SET 
+				NTT_NO = #nttNo#
+			WHERE NTT_ID = #nttId#
+ 		]]>
+	</update>
+
+	<select id="FloorPlanManageDAO.selectGuestList" parameterClass="FloorPlanVO" resultMap="guestList">
+		<![CDATA[
+			SELECT
+				a.NTT_ID, a.NTT_SJ, a.NTCR_NM, a.PASSWORD, 
+				DATE_FORMAT(a.FRST_REGIST_PNTTM, '%Y-%m-%d %H:%i:%S') 
+				as FRST_REGIST_PNTTM,
+				a.NTT_CN, a.USE_AT, a.BBS_ID, b.USER_NM as FRST_REGISTER_NM, a.FRST_REGISTER_ID
+			FROM
+				FLOORPLAN a, COMVNUSERMASTER b
+			WHERE
+				a.BBS_ID = #bbsId#
+			AND 
+				a.FRST_REGISTER_ID = b.ESNTL_ID
+			AND
+				a.USE_AT = 'Y'
+			ORDER BY a.SORT_ORDR DESC, a.NTT_NO ASC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>
+	</select>
+
+	<select id="FloorPlanManageDAO.selectGuestListCnt" parameterClass="FloorPlanVO" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT
+				COUNT(NTT_ID)
+			FROM
+				FLOORPLAN 
+			WHERE
+				BBS_ID = #bbsId#	
+			AND
+				USE_AT = 'Y'
+		]]>
+	</select>
+
+	<update id="FloorPlanManageDAO.deleteGuestList" parameterClass="FloorPlanVO">
+		<![CDATA[
+			UPDATE FLOORPLAN
+			SET USE_AT = 'N'
+			WHERE BBS_ID = #bbsId#
+			AND NTT_ID = #nttId#
+		]]>
+	</update>
+
+	<select id="FloorPlanManageDAO.getPasswordInf" parameterClass="FloorPlan" resultClass="java.lang.String">
+		<![CDATA[
+			SELECT
+				PASSWORD
+			FROM
+				FLOORPLAN	
+			WHERE BBS_ID = #bbsId#
+			AND NTT_ID = #nttId#				
+		]]>
+	</select>
+
+	<select id="FloorPlanManageDAO.getParentNttNo" parameterClass="FloorPlan" resultClass="java.lang.Long">
+		<![CDATA[
+			SELECT NTT_NO FROM FLOORPLAN
+			WHERE BBS_ID = #bbsId# AND NTT_ID = #parnts#			
+		]]>
+	</select>
+
+	<update id="FloorPlanManageDAO.updateOtherNttNo" parameterClass="FloorPlan">
+ 		<![CDATA[
+			UPDATE FLOORPLAN SET 
+				NTT_NO = NTT_NO + 1
+			WHERE BBS_ID = #bbsId# AND SORT_ORDR = #sortOrdr#
+			AND NTT_NO > #nttNo#
+ 		]]>
+	</update>
+
+	<update id="FloorPlanManageDAO.updateNttNo" parameterClass="FloorPlan">
+ 		<![CDATA[
+			UPDATE FLOORPLAN SET 
+				NTT_NO = #nttNo#
+			WHERE BBS_ID = #bbsId# 
+			AND NTT_ID = #nttId#
+ 		]]>
+	</update>
+
+</sqlMap>

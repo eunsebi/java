@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	수정일                 수정자                          수정내용
+  =========     =======    =================================================
+  2011.9.2   	정진오     	 	DeptSchdulManage.selectDeptSchdulManageRetrieve에 SCHDUL_CHARGER_NAME 추가(Daily 조회시 필요)
+  2011.9.7		이기하			DeptSchdulManage.insertDeptSchdulManage에 schdulChargerName -> schdulChargerId 컬럼변경
+  								DeptSchdulManage.updateDeptSchdulManage에 schdulChargerName -> schdulChargerId 컬럼변경
+  								DeptSchdulManage.selectDeptSchdulManageDetail에 EMPLYR_ID -> ESNTL_ID 컬럼변경
+  2011.10.05    서준식               보안 취약점 점검사항 반영 $->#변경	
+-->
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ConsumableBoard">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="comDefaultVO" type="egovframework.com.cmm.ComDefaultVO"/>
+	<typeAlias  alias="ConsumableInventoryVO" type="egovframework.com.cons.service.ConsumableInventoryVO"/>
+
+	<resultMap id="ConsumableInventory" class="egovframework.com.cons.service.ConsumableInventoryVO">
+	</resultMap>
+
+	<!-- 소모품 재고 등록 -->
+	<insert id="ConsumableBoardDAO.insertConsumableInventoryRegister" parameterClass="ConsumableInventoryVO">
+	    <![CDATA[
+			INSERT INTO CONSUMABLEINVENTORY
+			( codeId, bbsId, useCn, inventory, ntceBgnde, receiveName, note, useAt,
+			  schdulDeptId, frstRegisterId, frstRegisterPnttm, lastUpdusrId, lastUpdusrPnttm )
+			VALUES
+			( #consumable#, #bbsId#, #useCn#, #inventory#, #ntceBgndeView#, #receiveName#, #note#, 'Y',
+			  #schdulDeptId#, #frstRegisterId#, SYSDATE(), #lastUpdusrId#, SYSDATE() )			
+		]]>
+	    
+	</insert>
+	
+	<!-- 소모품 재고 현황 -->
+	<select id="ConsumableBoardDAO.selectConsumableCodeInventory" parameterClass="ConsumableInventoryVO" resultClass="ConsumableInventoryVO">
+	    <![CDATA[
+	    	SELECT 
+	    		*
+	    	FROM CONSUMABLEINVENTORY
+	    	WHERE codeId = #consumable# and schdulDeptId = #schdulDeptId#
+	    	order by nttNo desc limit 1
+	    ]]>	
+			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.NTT_SJ LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.NTT_CN LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual>	
+			<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	b.USER_NM LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual>
+	</select>
+	
+	<!-- 소모품 Code별 상세 조회 -->
+	<select id="ConsumableBoardDAO.selectInventoryDetailVO" parameterClass="ConsumableInventoryVo" resultClass="ConsumableInventoryVO">
+		<![CDATA[
+	    	SELECT 
+	    		nttNo,
+				bbsId,
+				codeId,
+				useCn,
+				inventory,
+				ntceBgnde,
+				receiveName,
+				note,
+				schdulDeptId,
+				frstRegisterId,
+				frstRegisterPnttm,
+				lastUpdusrId,
+				lastUpdusrPnttm,
+				(SELECT CODE_DC FROM comtccmmndetailcode WHERE CODE_ID = "IM030" AND CODE = a.codeId) AS codeNm
+	    	FROM CONSUMABLEINVENTORY a
+	    	WHERE nttNo = #nttNo# and bbsId = #bbsId# 
+		]]>
+	</select>
+	
+	<!-- 소모품 재고현황 삭제 -->
+	<update id="ConsumableBoardDAO.deleteConsumableInventory" parameterClass="ConsumableInventoryVo">
+ 		<![CDATA[
+			UPDATE CONSUMABLEINVENTORY SET 
+				note = #note#,
+				useAt = 'N',
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDT_PNTTM = SYSDATE()
+			WHERE bbsId = #bbsId#
+			AND nttNo = #nttNo#
+ 		]]>
+ 	</update>
+ 	
+ 	<!-- 그룹별 소모품 재고 현황 -->
+	<select id="ConsumableBoardDAO.selectConsumableInventoryArticles" parameterClass="ConsumableInventoryVO" resultClass="ConsumableInventoryVO">
+	    <![CDATA[
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+					nttNo,
+					bbsId,
+					codeId,
+					useCn,
+					inventory,
+					ntceBgnde,
+					receiveName,
+					schdulDeptId,
+					frstRegisterId,
+					frstRegisterPnttm,
+					lastUpdusrId,
+					lastUpdusrPnttm,
+					(SELECT CODE_DC FROM comtccmmndetailcode WHERE CODE_ID = "IM030" AND CODE = a.codeId) AS codeNm
+				FROM
+					CONSUMABLEINVENTORY a where bbsId = #bbsId#
+			  ORDER BY
+				a.nttNo DESC
+			)
+			AS aliasTable
+		GROUP BY
+		  	aliasTable.codeId
+		LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>	
+	</select>
+	
+	<!-- 설비별 소모품 재고파악용 -->
+	<select id="ConsumableBoardDAO.selectInventoryArticles" parameterClass="ConsumableInventoryVO" resultClass="ConsumableInventoryVO">
+	    <![CDATA[
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+					nttNo,
+					codeId,
+					useCn,
+					inventory,
+					ntceBgnde,
+					receiveName,
+					schdulDeptId,
+					frstRegisterId,
+					frstRegisterPnttm,
+					lastUpdusrId,
+					lastUpdusrPnttm,
+					(SELECT CODE_DC FROM comtccmmndetailcode WHERE CODE_ID = "IM030" AND CODE = a.codeId) AS codeNm
+				FROM
+					CONSUMABLEINVENTORY a where bbsId = #bbsId#
+			  ORDER BY
+				a.nttNo DESC
+			)
+			AS aliasTable
+		GROUP BY
+		  	aliasTable.codeId
+		]]>	
+	</select>
+	
+	<select id="ConsumableBoardDAO.selectBoardArticleListCnt" parameterClass="ConsumableInventoryVO" resultClass="java.lang.Integer" >
+		<![CDATA[
+			SELECT
+				*
+			FROM
+				(
+					SELECT
+						COUNT(DISTINCT a.codeId),
+						codeId
+					FROM
+						CONSUMABLEINVENTORY a
+					LEFT OUTER JOIN 
+						COMVNUSERMASTER b
+					ON a.frstRegisterId = b.ESNTL_ID 
+					WHERE
+						a.bbsId = #bbsId#
+				)
+			  AS aliasTable
+			  GROUP BY
+			  aliasTable.codeId
+		]]>
+	</select>
+	
+	<!-- 소모품 유형별 재고 수량 -->
+	<select id="ConsumableBoardDAO.selectConsumableInventoryCnt" parameterClass="java.util.HashMap" resultClass="ConsumableInventoryVO">
+	    <![CDATA[
+			SELECT
+				*
+			FROM
+				(
+				SELECT
+					nttNo,
+					codeId,
+					useCn,
+					inventory,
+					takeOut,
+					ntceBgnde,
+					receiveName,
+					schdulDeptId,
+					frstRegisterId,
+					frstRegisterPnttm,
+					lastUpdusrId,
+					lastUpdusrPnttm,
+					(SELECT CODE_NM FROM comtccmmndetailcode WHERE CODE_ID = "IM030" AND CODE = a.codeId) AS codeNm
+				FROM
+					CONSUMABLEINVENTORY a WHERE bbsId = #bbsId# AND codeId = #consumableImsi#
+				ORDER BY
+					a.nttNo desc
+				)
+			AS aliasTable
+		  	GROUP BY
+		  		aliasTable.codeId
+	    ]]>
+	</select>
+	
+	<update id="ConsumableBoardDAO.updateConsumableInventoryUse" parameterClass="ConsumableInventoryVO">
+	    <![CDATA[
+	    	UPDATE CONSUMABLEINVENTORY SET
+	    		inventory = #inventory#,
+	    		takeOut = #takeOut#,
+	    		lastUpdusrId = #lastUpdusrId#,
+	    		lastUpdusrPnttm = SYSDATE()
+	    	WHERE nttNo = #nttNo#
+	    ]]>
+	</update>
+	<!-- 재고현황 끝 -->
+	
+	<!-- 소모품 사용현황 시작 -->
+	<!-- 소모품 사용 등록 -->
+	<insert id="ConsumableBoardDAO.insertCleanPaperUseRegister" parameterClass="ConsumableInventoryVO">
+	    <![CDATA[
+	    	INSERT INTO CONSUMABLEUSE
+				( bbsId, codeId, facility, consumable, useCn, pm,
+				consumable_1, useCn_1, consumable_2, useCn_2, consumable_3, useCn_3, consumable_4, useCn_4, consumable_5, useCn_5,
+				ntceBgnde, mode, useAt, schdulDeptId, frstRegisterId, frstRegisterPnttm)
+			VALUES
+				( #bbsId#, #codeId#, #facility#, #consumableImsi#, #useCn#, #pm#,
+				#consumableImsi_1#, #useCn_1#, #consumableImsi_2#, #useCn_2#, #consumableImsi_3#, #useCn_3#, #consumableImsi_4#, #useCn_4#, #consumableImsi_5#, #useCn_5#,
+				#ntceBgndeView#, #mode#, 'Y', #schdulDeptId#, #frstRegisterId#, SYSDATE() )
+	    ]]>
+	</insert>
+	
+	<update id="ConsumableBoardDAO.updateUseRegister" parameterClass="ConsumableInventoryVO">
+		<![CDATA[
+			UPDATE CONSUMABLEUSE SET 
+				facility = #facility#,
+				useCn = #useCn#,
+				useCn_1 = #useCn_1#,
+				useCn_2 = #useCn_2#,
+				useCn_3 = #useCn_3#,
+				useCn_4 = #useCn_4#,
+				useCn_5 = #useCn_5#,
+				ntceBgnde = #ntceBgnde#,
+				frstRegisterId = #frstRegisterId#,
+				frstRegisterPnttm = SYSDATE()
+			WHERE bbsId = #bbsId#
+			AND nttNo = #nttNo#
+ 		]]>
+	</update>
+	
+	<!-- 소모품 사용 리스트 -->
+	<select id="ConsumableBoardDAO.selectUseList" parameterClass="ConsumableInventoryVO" resultClass="ConsumableInventoryVO">
+	<![CDATA[
+		SELECT
+			nttNo,
+			bbsId,
+			codeId,
+			facility,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = a.codeId AND CODE = a.facility) AS facilityNm,
+			consumable,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable) AS codeNm,
+			useCn,
+			consumable_1,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable_1) AS codeNm_1,
+			useCn_1,
+			consumable_2,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable_2) AS codeNm_2,
+			useCn_2,
+			consumable_3,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable_3) AS codeNm_3,
+			useCn_3,
+			consumable_4,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable_4) AS codeNm_4,
+			useCn_4,
+			consumable_5,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable_5) AS codeNm_5,
+			useCn_5,
+			useAt,
+			ntceBgnde,
+			pm,
+			frstRegisterPnttm
+		FROM CONSUMABLEUSE a
+		WHERE 1=1
+			and bbsId = #bbsId# and codeId = #codeId# and mode = #mode#
+		ORDER BY
+			a.nttNo DESC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		
+	]]>
+	</select>
+	
+	<select id="ConsumableBoardDAO.selectUseListCnt" parameterClass="ConsumableInventoryVO" resultClass="java.lang.Integer" >
+		<![CDATA[
+			SELECT
+				COUNT(a.nttNo)
+			FROM
+				CONSUMABLEUSE a
+			LEFT OUTER JOIN 
+				COMVNUSERMASTER b
+			ON a.frstRegisterId = b.ESNTL_ID 
+			WHERE 1=1
+				and a.bbsId = #bbsId# and a.codeId = #codeId# and mode = #mode#
+		]]>
+	</select>
+	
+	<!-- 설비별 사용현황 수정 -->
+	<select id="ConsumableBoardDAO.selectUseModify" parameterClass="java.util.HashMap" resultClass="ConsumableInventoryVO">
+	<![CDATA[
+		SELECT
+			nttNo,
+			bbsId,
+			codeId,
+			facility,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = a.codeId AND CODE = a.facility) AS facilityNm,
+			consumable,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable) AS codeNm,
+			useCn,
+			consumable_1,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable_1) AS codeNm_1,
+			useCn_1,
+			consumable_2,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable_2) AS codeNm_2,
+			useCn_2,
+			consumable_3,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable_3) AS codeNm_3,
+			useCn_3,
+			consumable_4,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable_4) AS codeNm_4,
+			useCn_4,
+			consumable_5,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'IM030' AND CODE = a.consumable_5) AS codeNm_5,
+			useCn_5,
+			mode,
+			pm,
+			frstRegisterPnttm
+		FROM CONSUMABLEUSE a
+		WHERE 1=1
+			and nttNo = #nttNo#
+	]]>
+	</select>
+	
+<!-- 크린롤러 반출 리스트 -->
+	<select id="ConsumableBoardDAO.selectCleanRollerInventoryList" parameterClass="ConsumableInventoryVO" resultClass="ConsumableInventoryVO">
+	<![CDATA[
+			SELECT
+				nttNo,
+				codeId,
+				takeOut,
+				useAt,
+				frstRegisterId,
+				DATE_FORMAT(a.frstRegisterPnttm, '%Y-%m-%d') as frstRegisterPnttm,
+				lastUpdusrId,
+				DATE_FORMAT(a.lastUpdusrPnttm, '%Y-%m-%d') as lastUpdusrPnttm,
+				(SELECT CODE_NM FROM comtccmmndetailcode WHERE CODE_ID = "IM030" AND CODE = a.codeId) AS codeNm
+			FROM
+				CONS_CLEANROLLER_INVENTORY a
+			WHERE bbsId = #bbsId#
+			ORDER BY
+				a.nttNo DESC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>
+		<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.NTT_SJ LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.NTT_CN LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	b.USER_NM LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>				
+	</select>
+	
+	<select id="ConsumableBoardDAO.selectCleanRollerInventoryListCnt" parameterClass="ConsumableInventoryVO" resultClass="java.lang.Integer" >
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT a.codeId)
+			FROM
+				CONS_CLEANROLLER_INVENTORY a
+			LEFT OUTER JOIN 
+				COMVNUSERMASTER b
+			ON a.frstRegisterId = b.ESNTL_ID 
+			WHERE
+				a.bbsId = #bbsId#
+		]]>
+	</select>
+	
+	<!-- 크린롤러 반출리스트 등록 -->
+	<insert id="ConsumableBoardDAO.insertCleanRollerTakeOutList" parameterClass="ConsumableInventoryVO">
+	    <![CDATA[
+	    	INSERT INTO CONS_CLEANROLLER_INVENTORY
+				( bbsId, codeId, takeOut, useAt,
+				 frstRegisterId, frstRegisterPnttm)
+			VALUES
+				( #bbsId#, #codeId#, #takeOut#, 'Y',
+				#frstRegisterId#, SYSDATE() )
+	    ]]>
+	</insert>
+	
+	<!-- 크린롤러 반출리스트 상세 조회 -->
+	<select id="ConsumableBoardDAO.selectCleanRollerDetailVO" parameterClass="ConsumableInventoryVO" resultClass="ConsumableInventoryVO">
+	    <![CDATA[
+			SELECT
+				nttNo,
+				bbsId,
+				codeId,
+				takeOut,
+				useAt,
+				frstRegisterId,
+				DATE_FORMAT(a.frstRegisterPnttm, '%Y-%m-%d') as frstRegisterPnttm,
+				lastUpdusrId,
+				DATE_FORMAT(a.lastUpdusrPnttm, '%Y-%m-%d') as lastUpdusrPnttm,
+				(SELECT CODE_NM FROM comtccmmndetailcode WHERE CODE_ID = "IM030" AND CODE = a.codeId) AS codeNm
+			FROM
+				CONS_CLEANROLLER_INVENTORY a
+			WHERE bbsId = #bbsId# and codeId = #codeId# and useAt = 'Y'
+			ORDER BY
+				a.nttNo desc
+		]]>
+		<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.NTT_SJ LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.NTT_CN LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+		<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	b.USER_NM LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+		</isEqual>
+	    
+	</select>
+	
+	<!-- 반출리스트 업데이트 수량 추가 -->
+	<update id="ConsumableBoardDAO.updateCleanRollerTakeOutList" parameterClass="ConsumableInventoryVO">
+		<![CDATA[
+			UPDATE CONS_CLEANROLLER_INVENTORY SET 
+				takeOut = #takeOut#,
+				frstRegisterId = #frstRegisterId#,
+				frstRegisterPnttm = SYSDATE()
+			WHERE bbsId = #bbsId#
+			AND nttNo = #nttNo#
+ 		]]>
+	</update>
+	
+	<!-- 반출리스트 업데이트 수량 추가 -->
+	<update id="ConsumableBoardDAO.deleteCleanRollerTakeOutList" parameterClass="ConsumableInventoryVO">
+		<![CDATA[
+			UPDATE CONS_CLEANROLLER_INVENTORY SET 
+				useAt = 'N',
+				lastUpdusrId = #lastUpdusrId#,
+				lastUpdusrPnttm = SYSDATE()
+			WHERE bbsId = #bbsId#
+				AND nttNo = #nttNo#
+ 		]]>
+	</update>
+
+</sqlMap>

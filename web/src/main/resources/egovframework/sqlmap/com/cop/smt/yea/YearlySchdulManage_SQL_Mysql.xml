@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	수정일                 수정자                          수정내용
+  =========     =======    =================================================
+  2011.9.2   	정진오     	 	DeptSchdulManage.selectDeptSchdulManageRetrieve에 SCHDUL_CHARGER_NAME 추가(Daily 조회시 필요)
+  2011.9.7		이기하			DeptSchdulManage.insertDeptSchdulManage에 schdulChargerName -> schdulChargerId 컬럼변경
+  								DeptSchdulManage.updateDeptSchdulManage에 schdulChargerName -> schdulChargerId 컬럼변경
+  								DeptSchdulManage.selectDeptSchdulManageDetail에 EMPLYR_ID -> ESNTL_ID 컬럼변경
+  2011.10.05    서준식               보안 취약점 점검사항 반영 $->#변경	
+-->
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="YearlySchdulManage">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="comDefaultVO" type="egovframework.com.cmm.ComDefaultVO"/>
+	<typeAlias  alias="YearlySchdulManageVO" type="egovframework.com.cop.smt.yea.service.YearlySchdulManageVO"/>
+
+	<resultMap id="YearlySchdulManage" class="egovframework.com.cop.smt.yea.service.YearlySchdulManageVO">
+		<result property="schdulId" column="SCHDUL_ID" columnIndex="1"/>
+		<result property="schdulSe" column="SCHDUL_SE" columnIndex="2"/>
+		
+		<result property="schdulKindCode" column="SCHDUL_KND_CODE" columnIndex="5"/>
+		<result property="schdulBgnde" column="SCHDUL_BGNDE" columnIndex="6"/>
+		<result property="schdulEndde" column="SCHDUL_ENDDE" columnIndex="7"/>
+		<result property="schdulNm" column="SCHDUL_NM" columnIndex="8"/>
+		<result property="schdulCn" column="SCHDUL_CN" columnIndex="9"/>
+		
+		
+		<result property="schdulChargerId" column="SCHDUL_CHARGER_ID" columnIndex="12"/>
+		<result property="schdulChargerName" column="SCHDUL_CHARGER_NAME" columnIndex="13"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="14"/>
+		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM" columnIndex="16" />
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="17"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDT_PNTTM" columnIndex="18"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="19" />
+	</resultMap>
+
+	<!-- 메인페이지/일정관리조회 -->
+	<select id="YearlySchdulManage.selectDeptSchdulManageMainList" parameterClass="java.util.Map" resultClass="egovMap">
+		SELECT
+			DATE_FORMAT(sysdate(),'%Y-%m-%d') TO_DAY,
+			A.SCHDUL_ID,
+			A.SCHDUL_SE,
+			A.SCHDUL_KND_CODE SCHDUL_KIND_CODE,
+			A.SCHDUL_BGNDE SCHDUL_BGNDE,
+			A.SCHDUL_ENDDE,
+			A.SCHDUL_NM,
+			A.SCHDUL_CN,
+			A.SCHDUL_CHARGER_ID,
+			A.ATCH_FILE_ID,
+			DATE_FORMAT(A.FRST_REGIST_PNTTM,'%Y-%m-%d') FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			A.LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM YEARLYSCHDULINFO A
+		WHERE 1=1
+		AND A.SCHDUL_KND_CODE = '1'
+
+		<![CDATA[
+		AND (
+		 ( SUBSTRING(A.SCHDUL_BGNDE,1,8) > DATE_FORMAT(sysdate(),'%Y%m%d') AND SUBSTRING(A.SCHDUL_BGNDE,1,8) <= DATE_FORMAT(sysdate(),'%Y%m%d'))
+		OR
+		 ( SUBSTRING(A.SCHDUL_ENDDE,1,8) >=DATE_FORMAT(sysdate(),'%Y%m%d') AND SUBSTRING(A.SCHDUL_BGNDE,1,8) <= DATE_FORMAT(sysdate(),'%Y%m%d'))
+		)
+		]]>
+
+		ORDER BY A.FRST_REGIST_PNTTM DESC
+		LIMIT 0, 4
+	</select>
+
+	<!-- 부서일정정보::목록조회 -->
+	<select id="YearlySchdulManage.selectDeptSchdulManageRetrieve" parameterClass="java.util.Map" resultClass="egovMap">
+	 <![CDATA[
+		SELECT
+			A.SCHDUL_ID,
+			A.SCHDUL_SE,
+			A.SCHDUL_KND_CODE	SCHDUL_KIND_CODE,
+			A.SCHDUL_BGNDE SCHDUL_BGNDE,
+			A.SCHDUL_ENDDE,
+			A.SCHDUL_NM,
+			A.SCHDUL_CN,
+			A.SCHDUL_CHARGER_ID,
+			(SELECT USER_NM FROM COMTNEMPLYRINFO WHERE ESNTL_ID = A.SCHDUL_CHARGER_ID) SCHDUL_CHARGER_NAME,
+			A.ATCH_FILE_ID,
+			A.FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			A.LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM YEARLYSCHDULINFO A
+		WHERE 1=1
+		AND A.SCHDUL_KND_CODE = '1'
+		
+	 ]]>
+
+
+
+	 <isNotEmpty property="searchMode">
+	 <isEqual property="searchMode" compareValue="MONTH">
+
+		 <isNotEmpty property="searchMonth">
+		 	<isNotEqual property="searchMonth" compareValue="">
+		 	 AND (#searchMonth# BETWEEN SUBSTRING(A.SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(A.SCHDUL_ENDDE, 1, 6) )
+		 	</isNotEqual>
+		 </isNotEmpty>
+
+	 </isEqual>
+	 <isEqual property="searchMode" compareValue="WEEK">
+	 <![CDATA[
+		AND (
+		 ( SUBSTRING(A.SCHDUL_BGNDE,1,8) > #schdulBgnde# AND SUBSTRING(A.SCHDUL_BGNDE,1,8) <= #schdulEndde#)
+		OR
+		 ( SUBSTRING(A.SCHDUL_ENDDE,1,8) > #schdulBgnde# AND SUBSTRING(A.SCHDUL_BGNDE,1,8) <= #schdulEndde#)
+		)
+	]]>
+	 </isEqual>
+	 <isEqual property="searchMode" compareValue="DAILY">
+	 <![CDATA[
+	 	 AND (#searchDay# BETWEEN SUBSTRING(A.SCHDUL_BGNDE, 1, 8)  AND SUBSTRING(A.SCHDUL_ENDDE, 1, 8) )
+	  ]]>
+	 </isEqual>
+	 </isNotEmpty>
+
+	 <isNotEmpty property="searchKeyword">
+	 	<isNotEqual property="searchKeyword" compareValue="">
+	 		
+
+			<isEqual property="searchCondition" compareValue="SCHDUL_SE">
+ 				AND SCHDUL_SE LIKE CONCAT ('%', #searchKeyword#,'%')
+ 			</isEqual> 	
+
+	 	</isNotEqual>
+	 </isNotEmpty>
+
+	</select>
+
+	<!-- 부서일정정보::상세보기 -->
+	<select id="YearlySchdulManage.selectDeptSchdulManageDetailVO" resultMap="YearlySchdulManage">
+		SELECT
+			A.SCHDUL_ID,
+			A.SCHDUL_SE,
+			A.SCHDUL_KND_CODE,
+			A.SCHDUL_BGNDE,
+			A.SCHDUL_ENDDE,
+			A.SCHDUL_NM,
+			A.SCHDUL_CN,
+			A.SCHDUL_CHARGER_ID,
+			(SELECT USER_NM FROM COMTNEMPLYRINFO WHERE ESNTL_ID = A.SCHDUL_CHARGER_ID) SCHDUL_CHARGER_NAME,
+			A.ATCH_FILE_ID,
+			A.FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			A.LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM YEARLYSCHDULINFO A
+		WHERE 1=1
+		AND SCHDUL_ID = #schdulId#
+	</select>
+
+	<!-- 부서일정정보::목록조회_게시물정보 -->
+	<select id="YearlySchdulManage.selectDeptSchdulManage" parameterClass="comDefaultVO" resultClass="egovMap">
+	 <![CDATA[
+		SELECT
+			A.SCHDUL_ID,
+			A.SCHDUL_SE,
+			A.SCHDUL_KND_CODE SCHDUL_KIND_CODE,
+			A.SCHDUL_BGNDE SCHDUL_BGNDE,
+			A.SCHDUL_ENDDE,
+			A.SCHDUL_NM,
+			A.SCHDUL_CN,
+			A.SCHDUL_CHARGER_ID,
+			A.ATCH_FILE_ID,
+			A.FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			A.LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM YEARLYSCHDULINFO A
+		WHERE 1=1
+	 ]]>
+	 <isNotEmpty property="searchKeyword">
+	 	<isNotEqual property="searchKeyword" compareValue="">
+ 				AND SCHDUL_NM LIKE CONCAT ('%', #searchKeyword#,'%')
+	 	</isNotEqual>
+	 </isNotEmpty>
+	 <![CDATA[
+		ORDER BY A.FRST_REGIST_PNTTM DESC
+		LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	]]>
+	</select>
+
+	<!-- 부서일정정보::목록조회_게시물 총갯수  -->
+	<select id="YearlySchdulManage.selectDeptSchdulManageCnt" parameterClass="comDefaultVO" resultClass="int">
+		SELECT
+		COUNT(*) totcnt
+		FROM YEARLYSCHDULINFO
+		WHERE 1=1
+	 <isNotEmpty property="searchKeyword">
+	 	<isNotEqual property="searchKeyword" compareValue="">
+ 				AND SCHDUL_NM LIKE CONCAT ('%', #searchKeyword#,'%')
+	 	</isNotEqual>
+	 </isNotEmpty>
+	</select>
+
+
+	<!-- 부서일정정보::삭제  -->
+	<delete id="YearlySchdulManage.deleteDiaryManage">
+			DELETE FROM COMTNDIARYINFO
+			WHERE SCHDUL_ID = #schdulId#
+	</delete>
+	<delete id="YearlySchdulManage.deleteDeptSchdulManage">
+		<![CDATA[
+			DELETE FROM YEARLYSCHDULINFO
+			WHERE SCHDUL_ID = #schdulId#
+		]]>
+	</delete>
+
+	<!-- 부서일정정보::수정  -->
+	<update id="YearlySchdulManage.updateDeptSchdulManage">
+		UPDATE YEARLYSCHDULINFO
+		SET
+			SCHDUL_SE=#schdulSe#,
+			SCHDUL_KND_CODE=#schdulKindCode#,
+			SCHDUL_BGNDE=#schdulBgnde#,
+			SCHDUL_ENDDE=#schdulEndde#,
+			SCHDUL_NM=#schdulNm#,
+			SCHDUL_CN=#schdulCn#,
+			ATCH_FILE_ID=#atchFileId#,
+			LAST_UPDT_PNTTM = sysdate(),
+			LAST_UPDUSR_ID = #lastUpdusrId#
+		WHERE SCHDUL_ID = #schdulId#
+	</update>
+
+	<!-- 부서일정정보::상세보기 -->
+	<select id="YearlySchdulManage.selectDeptSchdulManageDetail" resultClass="egovMap">
+		SELECT
+			A.SCHDUL_ID,
+			A.SCHDUL_SE,
+			A.SCHDUL_KND_CODE 	SCHDUL_KIND_CODE,
+			A.SCHDUL_BGNDE SCHDUL_BGNDE,
+			A.SCHDUL_ENDDE,
+			A.SCHDUL_NM,
+			A.SCHDUL_CN,
+			A.SCHDUL_CHARGER_ID,
+			(SELECT USER_NM FROM COMTNEMPLYRINFO WHERE ESNTL_ID = A.SCHDUL_CHARGER_ID) SCHDUL_CHARGER_NAME,
+			A.ATCH_FILE_ID,
+			A.FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			A.LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM YEARLYSCHDULINFO A
+		WHERE 1=1
+		AND SCHDUL_ID = #schdulId#
+	</select>
+
+	<!-- 부서일정정보::입력  -->
+	<insert id="YearlySchdulManage.insertDeptSchdulManage">
+	 <![CDATA[
+
+		INSERT INTO YEARLYSCHDULINFO (
+			SCHDUL_ID,
+			SCHDUL_SE,
+			SCHDUL_KND_CODE,
+			SCHDUL_BGNDE,
+			SCHDUL_ENDDE,
+			SCHDUL_NM,
+			SCHDUL_CN,
+			SCHDUL_CHARGER_ID,
+			ATCH_FILE_ID,
+			FRST_REGIST_PNTTM,
+			FRST_REGISTER_ID,
+			LAST_UPDT_PNTTM,
+			LAST_UPDUSR_ID
+		)VALUES(
+			#schdulId#,
+			#schdulSe#,
+			#schdulKindCode#,
+			#schdulBgnde#,
+			#schdulEndde#,
+			#schdulNm#,
+			#schdulCn#,
+			#schdulChargerId#,
+			#atchFileId#,
+			sysdate(),
+			#frstRegisterId#,
+			sysdate(),
+			#lastUpdusrId#
+		)
+
+	 ]]>
+	</insert>
+
+
+</sqlMap>

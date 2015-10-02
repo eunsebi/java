@@ -1,0 +1,18 @@
+#footer_area {
+	width: 980px; height: 66px; padding-top: 18px; margin-top: 10px; border-top-color: rgb(228, 228, 228); border-top-width: 2px; border-top-style: solid; float: left;
+}
+#footer_logo {
+	padding-left: 28px; float: left;
+}
+#footer_txt {
+	padding-top: 5px;
+}
+#footer_address {
+	padding-left: 36px; float: left;
+}
+#footer_mail {
+	float: left;
+}
+#footer_copyright {
+	padding-left: 36px; float: left;
+}

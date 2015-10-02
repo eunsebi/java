@@ -1,0 +1,554 @@
+﻿* {
+	margin: 0px; padding: 0px;
+}
+img {
+	border: currentColor;
+}
+fieldset {
+	border: currentColor;
+}
+button {
+	border: currentColor;
+}
+li {
+	list-style-type: none;
+}
+hr {
+	display: none;
+}
+button img {
+	display: none;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	text-decoration: underline;
+}
+a:focus {
+	text-decoration: underline;
+}
+textarea {
+	overflow: auto;
+}
+legend {
+	margin: 0px; padding: 0px; left: -1000px; top: -1000px; height: 0px; font-size: 0px; display: none; visibility: hidden; position: absolute;
+}
+caption {
+	margin: 0px; padding: 0px; left: -1000px; top: -1000px; height: 0px; font-size: 0px; display: none; visibility: hidden; position: absolute;
+}
+#label {
+	margin: 0px; padding: 0px; left: -1000px; top: -1000px; height: 0px; font-size: 0px; display: none; visibility: hidden; position: absolute;
+}
+img {
+	border: 0px currentColor;
+}
+html {
+	margin: 0px auto; text-align: center; color: rgb(51, 51, 51); font-family: "���", dotum , AppleGothic, Sans-serif; font-size: 12px;
+}
+body {
+	margin: 0px auto; text-align: center; color: rgb(51, 51, 51); font-family: "���", dotum , AppleGothic, Sans-serif; font-size: 12px;
+}
+h1 {
+	font-family: "돋음", dotum, AppleGothic, Sans-serif; font-size: 13px;
+}
+#sub_wrapper {
+	margin: 0px auto; width: 980px; text-align: center;
+}
+#inc_header {
+	width: 980px;
+}
+#inc_body {
+	width: 1024px; padding-top: 0px;
+/* 	width: 980px; padding-top: 8px; */
+}
+#inc_body #left_body {
+	width: 200px; text-align: left; float: left; padding-left: 0px; margin-left: 0px;
+}
+#inc_body #center_body {
+	width: 804px; line-height: 160%; padding-right: 22px; padding-left: 16px; float: left;
+}
+#inc_body #center_body_no_right_body {
+	width: 824px; line-height: 160%; padding-right: 0px; padding-left: 0px; float: left;
+	/* width: 765px; line-height: 160%; padding-right: 0px; padding-left: 10px; float: left; */
+}
+#inc_body #right_body {
+	width: 92px; height: 258px; float: left; position: relative;
+}
+#inc_footer {
+	width: 980px; margin-top: 10px; float: left;
+}
+.skip_nvi_hidden {
+	margin: 0px; padding: 0px; left: -1000px; top: -1000px; height: 0px; font-size: 0px; visibility: hidden; position: absolute;
+}
+.input_hidden {
+	height: 0px; visibility: hidden;
+}
+.li_dot {
+	list-style-type: disc;
+}
+#intro_img {
+	
+}
+.intro_title {
+	width: 804px; padding-top: 15px; border-bottom-color: rgb(212, 212, 212); border-bottom-width: 1px; border-bottom-style: solid; float: left;
+}
+.intro_title_img {
+	background-position: left; padding-left: 8px; font-size: 11pt; font-weight: bold; margin-top: 12px; margin-bottom: 10px; float: left; background-image: url("../../../images/egovframework/adt/bullet_bluebar.gif"); background-repeat: no-repeat;
+}
+.intro_title_right {
+	color: rgb(144, 144, 144); letter-spacing: -2px; font-size: 11px; float: right;
+}
+.intro_title_right_h_img {
+	padding-top: 4px; margin-right: 3px; float: left;
+}
+.intro_title_right_text {
+	color: rgb(95, 95, 95); font-size: 11px;
+}
+.intro_content_img_div {
+	width: 640px;
+}
+.intro_content_text_div {
+	width: 640px; text-align: left; padding-top: 10px; padding-left: 13px;
+}
+.intro_content_text_div ul {
+	margin: 7px 0px 20px 20px;
+}
+.intro_content_title {
+	width: 643px; height: 22px; text-align: left; padding-top: 5px; padding-left: 10px; font-weight: bold; margin-top: 5px; float: left; background-image: url("../../../images/egovframework/adt/gray_bgbg.gif");
+}
+#const_img {
+	
+}
+.const_title {
+	width: 653px; padding-top: 15px; border-bottom-color: rgb(212, 212, 212); border-bottom-width: 1px; border-bottom-style: solid; float: left;
+}
+.const_title_img {
+	background-position: left; padding-left: 8px; font-size: 11pt; font-weight: bold; margin-top: 12px; margin-bottom: 10px; float: left; background-image: url("../../../images/egovframework/adt/bullet_bluebar.gif"); background-repeat: no-repeat;
+}
+.const_title_right {
+	color: rgb(144, 144, 144); letter-spacing: -2px; font-size: 11px; float: right;
+}
+.const_title_right_text {
+	color: rgb(95, 95, 95); font-size: 11px;
+}
+.const_content_img_div {
+	width: 640px;
+}
+.const_content_text_div {
+	width: 640px; text-align: left; padding-top: 10px; padding-left: 13px; float: left;
+}
+.const_content_text_div ul {
+	margin: 7px 0px 20px 20px;
+}
+.const_content_title {
+	width: 643px; height: 22px; text-align: left; padding-top: 5px; padding-left: 10px; font-weight: bold; margin-top: 5px; float: left; background-image: url("../../../images/egovframework/adt/gray_bgbg.gif");
+}
+.const_content_table {
+	width: 640px; float: left;
+}
+.const_content_table table {
+	background-color: rgb(221, 221, 221);
+}
+.const_content_table table tr td table tr th {
+	background-color: rgb(245, 245, 245);
+}
+.const_content_table table tr td table .td_title {
+	background-color: rgb(245, 245, 245);
+}
+.const_content_table table tr td table .td_content {
+	background-color: rgb(255, 255, 255);
+}
+#envrun_img {
+	
+}
+.envrun_title {
+	width: 653px; padding-top: 15px; border-bottom-color: rgb(212, 212, 212); border-bottom-width: 1px; border-bottom-style: solid; float: left;
+}
+.envrun_title_img {
+	background-position: left; padding-left: 8px; font-size: 11pt; font-weight: bold; margin-top: 12px; margin-bottom: 10px; float: left; background-image: url("../../../images/egovframework/adt/bullet_bluebar.gif"); background-repeat: no-repeat;
+}
+.envrun_title_right {
+	color: rgb(144, 144, 144); letter-spacing: -2px; font-size: 11px; float: right;
+}
+.envrun_title_right_text {
+	color: rgb(95, 95, 95); font-size: 11px;
+}
+.envrun_content_img_div {
+	width: 640px;
+}
+.envrun_content_text_div {
+	width: 640px; text-align: left; padding-top: 10px; padding-left: 13px; float: left;
+}
+.envrun_content_text_div ul {
+	margin: 7px 0px 20px 20px;
+}
+.envrun_content_title {
+	width: 643px; height: 22px; text-align: left; padding-top: 5px; padding-left: 10px; font-weight: bold; margin-top: 5px; float: left; background-image: url("../../../images/egovframework/adt/gray_bgbg.gif");
+}
+.envrun_content_table {
+	width: 640px; text-align: left;
+}
+.envrun_content_table table {
+	text-align: center; background-color: rgb(221, 221, 221);
+}
+.envrun_content_table table tr td table tr th {
+	background-color: rgb(245, 245, 245);
+}
+.envrun_content_table table tr td table .td_title {
+	background-color: rgb(245, 245, 245);
+}
+.envrun_content_table table tr td table .td_content {
+	background-color: rgb(255, 255, 255);
+}
+
+/*2012-10-24 추가 */
+.app_info_tit {height:92px;}
+.app_info_tit .img {width:92px; float:left; text-align:center; vertical-align:middle; padding:10px 0 4px 0;}
+.app_info_tit .tit_text {float:left; font-size:16px; color:#333; font-weight:bold;  vertical-align:middle; padding-top:41px; letter-spacing:-1px;}
+/*2012-10-24 추가 */
+
+
+
+#envdev_img {
+	
+}
+.envdev_title {
+	width: 653px; padding-top: 15px; border-bottom-color: rgb(212, 212, 212); border-bottom-width: 1px; border-bottom-style: solid; float: left;
+}
+.envdev_title_img {
+	background-position: left; padding-left: 8px; font-size: 11pt; font-weight: bold; margin-top: 12px; margin-bottom: 10px; float: left; background-image: url("../../../images/egovframework/adt/bullet_bluebar.gif"); background-repeat: no-repeat;
+}
+.envdev_title_right {
+	color: rgb(144, 144, 144); letter-spacing: -2px; font-size: 11px; float: right;
+}
+.envdev_title_right_text {
+	color: rgb(95, 95, 95); font-size: 11px;
+}
+.envdev_content_img_div {
+	width: 640px;
+}
+.envdev_content_text_div {
+	width: 640px; text-align: left; padding-top: 10px; padding-left: 13px; float: left;
+}
+.envdev_content_text_div ul {
+	margin: 7px 0px 20px 20px;
+}
+.envdev_content_title {
+	width: 643px; height: 22px; text-align: left; padding-top: 5px; padding-left: 10px; font-weight: bold; margin-top: 5px; float: left; background-image: url("../../../images/egovframework/adt/gray_bgbg.gif");
+}
+#license_img {
+	
+}
+.license_title {
+	width: 653px; padding-top: 15px; border-bottom-color: rgb(212, 212, 212); border-bottom-width: 1px; border-bottom-style: solid; float: left;
+}
+.license_title_img {
+	background-position: left; padding-left: 8px; font-size: 11pt; font-weight: bold; margin-top: 12px; margin-bottom: 10px; float: left; background-image: url("../../../images/egovframework/adt/bullet_bluebar.gif"); background-repeat: no-repeat;
+}
+.license_title_right {
+	color: rgb(144, 144, 144); letter-spacing: -2px; font-size: 11px; float: right;
+}
+.license_title_right_text {
+	color: rgb(95, 95, 95); font-size: 11px;
+}
+.license_content_img_div {
+	width: 640px;
+}
+.license_content_text_div {
+	width: 640px; text-align: left; padding-top: 10px; padding-left: 13px; float: left;
+}
+.license_content_text_div ul {
+	margin: 7px 0px 20px 20px;
+}
+.license_content_title {
+	width: 643px; height: 22px; text-align: left; padding-top: 5px; padding-left: 10px; font-weight: bold; margin-top: 5px; float: left; background-image: url("../../../images/egovframework/adt/gray_bgbg.gif");
+}
+.license_contents_text_main {
+	border: 1px solid rgb(212, 212, 212); width: 640px; text-align: left; float: left; background-color: rgb(249, 247, 237);
+}
+.login_content_table {
+	width: 653px; margin-top: 20px; float: left;
+}
+.login_content_table label {
+	visibility: visible; position: static;
+}
+.login_box01 {
+	background-position: left; width: 322px; height: 196px; float: left; background-image: url("../../../images/egovframework/adt/login_img/login_bgbox.jpg"); background-repeat: no-repeat;
+}
+.login_top_img {
+	text-align: left; padding-top: 20px; padding-left: 14px; float: left;
+}
+#login_form_div01 {
+	padding-top: 10px; padding-left: 14px; float: left;
+}
+#login_form_div01_img {
+	width: 195px; padding-left: 14px; float: left;
+}
+#login_form_div01_img ul {
+	margin-top: 10px; float: left;
+}
+.login_form_div01_li_01 {
+	width: 60px; text-align: left; padding-top: 3px; float: left;
+}
+.login_form_div01_li_02 {
+	float: left;
+}
+#login_form_div01_login_btn {
+	padding-top: 10px; float: left;
+}
+#login_form_div02 {
+	padding-top: 3px; padding-left: 25px; float: left;
+}
+#login_form_div03 {
+	width: 300px; clear: both; float: left;
+}
+#login_form_div03 ul {
+	padding-top: 10px; padding-left: 30px; float: left;
+}
+.login_form_div03_li_01 {
+	padding-right: 10px; float: left; display: inline;
+}
+.login_form_div03_li_02 {
+	padding-right: 10px; float: left; display: inline;
+}
+.ser_box_login {
+	border: 1px solid rgb(195, 195, 202); width: 117px; height: 18px;
+}
+.ser_box {
+	border: 1px solid rgb(195, 195, 202); width: 117px; height: 18px;
+}
+.login_box02 {
+	background-position: left; width: 322px; height: 196px; margin-left: 2px; float: left; background-image: url("../../../images/egovframework/adt/login_img/login_bgbox.jpg"); background-repeat: no-repeat;
+}
+.gpki_login_top_img {
+	text-align: left; padding-top: 20px; padding-left: 20px; float: left;
+}
+#gpki_login_form_div01 {
+	text-align: left; padding-top: 10px; float: left;
+}
+#gpki_login_form_div01 ul {
+	padding-left: 20px; margin-top: 10px; float: left;
+}
+#gpki_login_form_div01 ul li {
+	padding-bottom: 3px; float: left;
+}
+#gpki_login_form_div02 {
+	padding-top: 10px; padding-left: 16px; float: left;
+}
+.sign_field {
+	border: 1px solid rgb(180, 180, 180); color: rgb(89, 89, 89); padding-left: 2px; font-family: "??="; font-size: 9pt;
+}
+.sitemap_main {
+	background: url("../../../images/egovframework/adt/main_img/sitemap_main.gif") no-repeat; width: 176px; height: 30px; text-align: center; color: rgb(68, 186, 149); padding-top: 5px; font-family: "���", datum, Arial, Verdana; font-size: 9pt; font-weight: bold; margin-bottom: 5px; float: left;
+}
+a.sitemap_main_link:link {
+	color: rgb(0, 0, 0); font-family: "dotum", "gulim","dotum","Arial", "Verdana"; font-size: 9pt; text-decoration: none;
+}
+a.sitemap_main_link:hover {
+	color: rgb(94, 140, 168); font-family: "dotum", "gulim","dotum","Arial", "Verdana"; font-size: 9pt; text-decoration: underline;
+}
+a.sitemap_main_link:active {
+	color: rgb(0, 0, 0); font-family: "dotum", "gulim","dotum","Arial", "Verdana"; font-size: 9pt; text-decoration: none;
+}
+.sitemap_sub01 {
+	color: rgb(153, 153, 153); padding-left: 13px; font-family: "dotum", "gulim","dotum","Arial", "Verdana"; font-size: 9pt; font-weight: bold; margin-top: 10px;
+}
+.sitemap_sub011 a {
+	color: rgb(102, 102, 102); font-family: "돋음",dotum; font-size: 12px; text-decoration: none;
+}
+a:link {
+	color: rgb(102, 102, 102); font-family: "돋음",dotum; font-size: 12px; text-decoration: none;
+}
+a:visited {
+	color: rgb(102, 102, 102); font-family: "돋음",dotum; font-size: 12px; text-decoration: none;
+}
+.sitemap_sub011 a:hover {
+	color: rgb(196, 152, 34); font-family: "돋음",dotum; font-size: 12px; text-decoration: underline;
+}
+.sitemap_sub02 {
+	color: rgb(96, 121, 168); line-height: 30px; letter-spacing: -1px; font-family: "dotum", "gulim","dotum","Arial", "Verdana"; font-size: 9pt;
+}
+.sitemap_sub02 a {
+	color: rgb(102, 102, 102); font-family: "돋음",dotum; font-size: 12px; text-decoration: none;
+}
+a:link {
+	color: rgb(102, 102, 102); font-family: "돋음",dotum; font-size: 12px; text-decoration: none;
+}
+.sitemap_sub02 a:hover {
+	color: rgb(196, 152, 34); font-family: "돋음",dotum; font-size: 12px; text-decoration: underline;
+}
+.site_box {
+	width: 176px; padding-right: 40px; margin-bottom: 20px; margin-left: 0px; float: left;
+}
+.ser_sort {
+	color: rgb(255, 140, 0); font-family: "dotum", "gulim","dotum","Arial", "Verdana"; font-size: 9pt; font-weight: bold;
+}
+.ser_view {
+	color: rgb(1, 56, 118); font-family: "Tahoma"; font-size: 7pt;
+}
+a.ser_title:link {
+	color: rgb(62, 116, 192); line-height: 12pt; font-family: "gulim","dotum","Arial", "Verdana"; font-size: 10pt; font-weight: bold; text-decoration: underline;
+}
+a.ser_title:visited {
+	color: rgb(62, 116, 192); line-height: 12pt; font-family: "gulim","dotum","Arial", "Verdana"; font-size: 10pt; font-weight: bold;
+}
+a.ser_title:active {
+	color: rgb(62, 116, 192); line-height: 12pt; font-family: "gulim","dotum","Arial", "Verdana"; font-size: 10pt; font-weight: bold;
+}
+a.ser_title:hover {
+	color: rgb(0, 0, 204); line-height: 12pt; font-family: "gulim","dotum","Arial", "Verdana"; font-size: 10pt; font-weight: bold;
+}
+.tablelayout {
+	width: 760px; overflow: auto; table-layout: fixed;
+}
+
+//게시판 리스트용
+.egovframe_tablestyle {
+	width: 794px; color: rgb(102, 102, 102); line-height: 18px; padding-top: 20px; font-family: "돋음",dotum, AppleGothic, Sans-serif; font-size: 12px; float: left;
+}
+.egovframe_tablestyle table {
+	width: 794px; padding-top: 20px;  text-align: center; table-layout: fixed;
+}
+.egovframe_tablestyle table th {
+	height: 28px; color: rgb(255, 255, 255); font-weight: bold; border-top-color: rgb(0, 152, 201); border-bottom-color: rgb(0, 152, 201); border-top-width: 2px; border-bottom-width: 1px; border-top-style: solid; border-bottom-style: solid; background-image: url("../../../images/egovframework/adt/img_board_bg.gif"); background-repeat: repeat-x;
+}
+.egovframe_tablestyle table td {
+	width: 100%; line-height: 28px; overflow: hidden; padding-left: 5px; border-bottom-color: rgb(171, 194, 217); border-bottom-width: 1px; border-bottom-style: solid; white-space: nowrap;
+}
+.egovframe_tablestyle .category {
+	color: rgb(72, 187, 183);
+}
+.egovframe_tablestyle a {
+	color: rgb(102, 102, 102);
+}
+.egovframe_tablestyle a:link {
+	color: rgb(102, 102, 102);
+}
+a:visited {
+	color: rgb(102, 102, 102);
+}
+.egovframe_tablestyle a:hover {
+	color: rgb(31, 88, 177); text-decoration: underline;
+}
+.egovframe_tablestyle .align_left_text {
+	padding-left: 3px; float: left;
+}
+.egovframe_table_detail {
+	color: rgb(102, 102, 102); padding-top: 20px; font-family: "돋음",dotum, AppleGothic, Sans-serif; font-size: 12px; float: left;
+}
+.egovframe_table_detail table {
+	width: 650px; text-align: left; line-height: 24px; border-top-color: rgb(171, 194, 217); border-top-width: 2px; border-top-style: solid; table-layout: fixed;
+}
+.egovframe_table_detail table th {
+	width: 100px; color: rgb(96, 133, 201); padding-left: 10px; font-weight: bold; border-bottom-color: rgb(171, 194, 217); border-bottom-width: 1px; border-bottom-style: solid; background-color: rgb(247, 247, 247);
+}
+.egovframe_table_detail table td {
+	line-height: 28px; padding-left: 5px; border-bottom-color: rgb(171, 194, 217); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.egovframe_table_detail .title {
+	color: rgb(1, 64, 131); font-family: "돋음",dotum,AppleGothic, Sans-serif; font-size: 13px; font-weight: bold;
+}
+.egovframe_table_detail a {
+	color: rgb(102, 102, 102);
+}
+.egovframe_table_detail a:link {
+	color: rgb(102, 102, 102);
+}
+a:visited {
+	color: rgb(102, 102, 102);
+}
+.egovframe_table_detail a:hover {
+	color: rgb(31, 88, 177); text-decoration: underline;
+}
+.egovframe_tablestyle .align_left_text {
+	padding-left: 3px; float: left;
+}
+.date_etc_color {
+	color: rgb(149, 149, 149);
+}
+.error_wrap {
+	margin: 0px auto; width: 642px; padding-top: 30px;
+}
+.error_background {
+	width: 642px; height: 357px; background-image: url("/images/egovframework/adt/error_page/bg_error.gif"); background-repeat: repeat-x;
+}
+.content_wrap {
+	padding-top: 190px; padding-left: 160px; float: left;
+}
+.error_img {
+	float: left;
+}
+.error_println {
+	top: 30px; font-family: "돋음",dotum; font-size: 15px; float: left; display: inline; position: relative;
+}
+.error_btn_area {
+	padding-top: 10px; padding-left: 80px; clear: both; float: left; display: inline;
+}
+.error_footer {
+	padding-top: 5px; float: left;
+}
+.error_mopas {
+	padding-left: 20px; float: left;
+}
+.error_address {
+	padding-left: 25px; float: left;
+}
+.egovframe_subtable p {
+	text-align: left; color: rgb(0, 0, 0); line-height: 18px; padding-bottom: 5px;
+}
+.egovframe_subtable {
+	color: rgb(102, 102, 102); padding-top: 10px; padding-bottom: 10px; font-family: "돋음",dotum, AppleGothic, Sans-serif; font-size: 12px; float: left; border-collapse: collapse;
+}
+.egovframe_subtable table {
+	border: 1px solid rgb(171, 194, 217); width: 650px; text-align: left; line-height: 15px; border-collapse: collapse; table-layout: fixed;
+}
+.egovframe_subtable table th {
+	padding: 5px; width: 100px; height: 30px; text-align: center; color: rgb(96, 133, 201); font-weight: bold; border-right-color: rgb(171, 194, 217); border-bottom-color: rgb(171, 194, 217); border-right-width: 1px; border-bottom-width: 1px; border-right-style: solid; border-bottom-style: solid; background-color: rgb(247, 247, 247);
+}
+.egovframe_subtable table td {
+	padding: 5px; height: 20px; line-height: 24px; border-right-color: rgb(171, 194, 217); border-bottom-color: rgb(171, 194, 217); border-right-width: 1px; border-bottom-width: 1px; border-right-style: solid; border-bottom-style: solid;
+}
+
+.egovframe_subtable_tight p {
+    text-align: left; color: rgb(0, 0, 0); line-height: 18px; padding-bottom: 5px;
+}
+.egovframe_subtable_tight {
+    color: rgb(102, 102, 102); padding-top: 10px; padding-bottom: 10px; font-family: "돋음",dotum, AppleGothic, Sans-serif; font-size: 12px; float: left; border-collapse: collapse;
+}
+.egovframe_subtable_tight table {
+    border: 1px solid rgb(171, 194, 217); width: 650px; text-align: left; line-height: 15px; border-collapse: collapse; table-layout: fixed;
+}
+.egovframe_subtable_tight table th {
+    padding: 5px; width: 100px; height: 30px; text-align: center; color: rgb(96, 133, 201); font-weight: bold; border-right-color: rgb(171, 194, 217); border-bottom-color: rgb(171, 194, 217); border-right-width: 1px; border-bottom-width: 1px; border-right-style: solid; border-bottom-style: solid; background-color: rgb(247, 247, 247);
+}
+.egovframe_subtable_tight table td {
+    padding: 5px; height: 20px; border-right-color: rgb(171, 194, 217); border-bottom-color: rgb(171, 194, 217); border-right-width: 1px; border-bottom-width: 1px; border-right-style: solid; border-bottom-style: solid;
+}
+
+
+.subtext_box_align {
+	text-align: left;
+}
+
+//메��의 ��면섙� ��과
+.pics {  
+    height:  220px; width: 960px;  padding: 0; margin:  0;  
+} 
+ 
+.pics img {  
+    padding: 0px;  background-color: #eee;    width:  960px;    height: 220px;    top:  0;    left: 0 
+} 
+
+.nav {
+	 margin: 5px 0 
+	 }
+.nav a, #s7 strong {
+	padding: 6px; text-align:center; height:20px;color: rgb(187, 184, 182);;background:url("/images/egovframework/adt/index_img/icon_main_off.gif") no-repeat; z-index:999;
+}
+.nav a.activeSlide {
+	background:url("/images/egovframework/adt/index_img/icon_main_on.gif") no-repeat;z-index:999;
+}

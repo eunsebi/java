@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+		<form name="FloorPlanVO">
+			<field property="model" depends="required">
+        		<arg0 key="모델명" />
+			</field>
+			<field property="division" depends="required">
+        		<arg0 key="구분" />
+			</field>
+			<field property="rev" depends="required">
+        		<arg0 key="Revision" />
+			</field>
+			<field property="size" depends="required">
+        		<arg0 key="사이즈" />
+			</field>
+			<field property="name_01" depends="required">
+        		<arg0 key="등록명" />
+			</field>
+			<field property="spec" depends="required">
+        		<arg0 key="조건선택" />
+			</field>
+			<field property="number" depends="required">
+        		<arg0 key="등록호기" />
+			</field>
+			<field property="offset" depends="required">
+        		<arg0 key="Offset 적용 여부" />
+			</field>
+			<field property="ntceBgnde" depends="required">
+        		<arg0 key="cop.ntceBgnde" />
+			</field>
+			<field property="ntceEndde" depends="required">
+        		<arg0 key="cop.ntceEndde" />
+			</field>
+			<field property="ntcrNm" depends="required">
+        		<arg0 key="cop.ntcrNm" />
+			</field>
+			<field property="password" depends="required">
+        		<arg0 key="cop.password" />
+			</field>
+		</form>
+    </formset>
+
+</form-validation>

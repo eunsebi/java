@@ -1,0 +1,19 @@
+/*
+	PUBLIC CSS
+	쇼핑몰 관련 페이지 출력시 본 CSS 파일은  기본적으로 로딩된다.
+	사용자가 직접,  필요한 css 코드를 작성해 넣고 사용하면 된다.
+	-------------------------
+	정식버전에 기본 제공되는 쇼핑몰 스킨에서는 작업 편의를 고려해 각각의 php 파일에
+	css style 코드가 분산되어 있는데, 필요하다면 본 파일 하나에 모두 통합해 넣어 줘도 된다.
+	단, php 변수가 포함된 style 코드는 원래의 php 파일에 그대로 위치 되어야 한다.
+*/
+
+
+
+
+	/* public_div */
+	.tnt_public_div{background-color:#ffffff;}
+	.tnt_public_div A:link{text-decoration:none; color:#333333;}
+	.tnt_public_div A:visited{text-decoration:none; color:#333333;}
+	.tnt_public_div A:hover{text-decoration:none; color:#DE1C41;}
+	.tnt_public_div form{padding:0; margin:0;} a,label{cursor:pointer;}

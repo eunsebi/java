@@ -1,0 +1,502 @@
+html{
+	width:100%;
+	height:100%;
+}
+
+BODY.topbg{
+	width:100%;
+	margin:0 auto;
+	background:url(/common/images/theme1/top/bg.gif) repeat-x;
+	font:12px 'dotum';
+	color:#646464;
+	scrollbar-face-color:#ECECEC;
+	scrollbar-highlight-color:#ECECEC;
+	scrollbar-3dlight-color:#E2E2E2;
+	scrollbar-darkshadow-color:#E2E2E2;
+	scrollbar-shadow-color:#ECECEC;
+	scrollbar-arrow-color:#C0BFBF;
+	scrollbar-track-color:#fff;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+
+BODY {
+	width:100%;
+	height:100%;
+	margin:0 auto;
+	font:12px 'dotum';
+	color:#646464;
+	
+	scrollbar-face-color:#ECECEC;
+	scrollbar-highlight-color:#ECECEC;
+	scrollbar-3dlight-color:#E2E2E2;
+	scrollbar-darkshadow-color:#E2E2E2;
+	scrollbar-shadow-color:#ECECEC;
+	scrollbar-arrow-color:#C0BFBF;
+	scrollbar-track-color:#F7F7F7;
+	
+	overflow-y:auto;		/* [mokwonkyun] overflow:auto -> overflow:scroll로 변경 */
+	overflow-x:hidden;
+}
+
+BODY.portlet {background:#fff;}
+img{border:0;}
+
+.space_height{margin-bottom:7px;}
+.space_height6{margin-bottom:6px;}
+.space_height5{margin-bottom:5px;}  /* [mokwonkyun] 5px -> 0px */ 
+
+/*----- [공통] 텍스트 정의  -----*/
+.styleTxt1{color:#235dc0; } /* 계열사공지사항 타이틀 색상  */
+.styleTxt2{color:#fe7801; text-decoration:underline; font-weight:bold;} /* 신착건수 숫자 색상  */
+.styleTxt3{color:#00a0dd; text-decoration:none; font-weight:normal;} /* 일정 시간대 색상  */
+.styleTxt4{color:#5a5959; text-decoration:none; font-weight:bold; font-family:'Arial';  font-size:16px;} /* 일정 시간 색상  */
+.bold{font-weight:bold;}
+
+/*----- [공통] 테이블 리스트 공통 클래스 : 필요시 테이블별로 신규로 생성해서 커스팅마이징.  -----*/
+.listTD {height:18px; background:url(/common/images/theme1/body/etc_bullet.gif) 0 6px no-repeat; padding-left:7px;}
+.listTD_R {height:18px; text-align:right; color:#b1b1b1;}
+
+A.listLink, A.listLink:active, A.listLink:visited {font:12px 'dotum'; color:#646464; text-decoration:none;}
+A.listLink:hover {text-decoration:underline;}
+A.re {font:11px 'dotum'; color:#fe7801; text-decoration:none;}
+
+/*----- [TOP] 영역 디자인  -----*/
+.topRowWrap {
+	z-index:20; 
+	position:relative; top:0px;
+	width:995px; height:0px;
+	margin:0 auto;
+}
+
+.topRow01Wrap {
+	z-index:20; /* 레이어 순위 #20 */
+	position:relative; top:0px;
+	width:995px; height:31px;
+	margin:0 auto;
+}
+.topRow02Wrap {
+	width:995px; height:54px;
+	position:relative;
+	margin:0 auto;	
+}
+.topRow03Wrap {
+	width:995px; height:30px;
+	position:relative;
+	margin:0 auto;	
+}
+
+/*----- [고정-TOP] 상단 영역 디자인  -----*/
+.logo {height:54px; width:160px; float:left; background:url(/common/images/theme1/top/logo.gif) no-repeat; cursor:pointer;}
+.ticker {height:30px; width:100%;}
+
+.contentWrap {
+	display:show;
+	width:995px;
+	position:relative;
+	margin:15px auto 0 auto;	
+}
+
+.bodyscroll {
+	width:100%; 
+	height:100%; 
+	overflow-y:scroll;
+}
+
+/*----- [레이어] 즐겨찾기,링크  -----*/
+.topMenu .left {float:left; cursor:pointer;}
+.topMenu .bookmark {width:150px; height:30px; float:left; background:url(/common/images/theme1/top/topmenu_bookmark.gif) no-repeat;}
+.topMenu .sitelink {width:160px; height:30px; float:left; background:url(/common/images/theme1/top/topmenu_sitelink.gif) no-repeat;}
+
+.bookmarkLayer {width:146px; height:200px; top:30px; background-color:#FFF; border:2px solid #5894e5;} /* [mokwonkyun] display:none 추가  */
+.bookmarkLayer ._panel {width:100%; height:173px; background-color:#FFF; overflow-y:auto; overflow-x:hidden;} /* [mokwonkyun] 변경 */
+.bookmarkLayer ._panel ul {margin:0; padding:7px 10px 0px 10px; list-style:none;} /* [mokwonkyun] 변경 */
+
+.bookmarkLayer ._panel ul li.tit01   {margin:0; padding:0; display:block; height:19px;  font-weight:bold; color:#272727; letter-spacing:-1px; background:url(../img/header/etc_t.gif) no-repeat;}
+.bookmarkLayer ._panel ul li.tit01 a {margin:0; padding:0; display:block; height:19px;  font-weight:bold; color:#272727; letter-spacing:-1px; text-decoration:none;}
+.bookmarkLayer ._panel ul li.tit01 a:hover {margin:0; padding:0; display:block; height:19px;  font-weight:bold; color:#272727; letter-spacing:-1px; text-decoration:none;}
+
+
+.bookmarkLayer ._panel ul li {margin:0; padding:0 0 0 6px; display:block; height:19px; background:url(/common/images/theme1/top/etc_bullet.gif) 0px 7px no-repeat;} /* [mokwonkyun] 변경 */
+.bookmarkLayer ._panel ul li a {font:12px 'dotum'; color:#444; text-decoration:none;} /* [mokwonkyun] 변경 */
+.bookmarkLayer ._panel ul li a:hover {text-decoration:underline; font-weight:bold; letter-spacing:-1px;} /* [mokwonkyun] 변경 */
+
+.sitelinkLayer {width:250px; height:200px; top:30px; background-color:#FFF; border:2px solid #58b5e5;} /* [mokwonkyun] display:none 추가  */
+.sitelinkLayer div{float:left;}
+.sitelinkLayer .linkTab{width:100%; padding:0; margin:0;}
+
+.sitelinkLayer ._panel {width:100%; height:150px; background-color:#FFF; overflow-y:auto; overflow-x:hidden;} /* [mokwonkyun] 변경 */
+.sitelinkLayer ._panel ul {margin:0; padding:12px 10px 8px 10px; list-style:none;}
+.sitelinkLayer ._panel ul li {margin:0; padding:0 0 0 6px; display:block; height:20px; background:url(/common/images/theme1/body/etc_bullet.gif) 0px 7px no-repeat;}
+.sitelinkLayer ._panel ul li a {font:12px 'dotum'; color:#444; text-decoration:none;}
+.sitelinkLayer ._panel ul li a:hover {text-decoration:underline; font-weight:bold; letter-spacing:-1px;}
+
+.tabL_on{width:10px; height:23px; background:url(/common/images/theme1/top/linkTab_leftOn.gif);}
+.tabC_on{height:23px; background:url(/common/images/theme1/top/linkTab_midOn.gif); font-weight:bold; color:#555555;}
+.tabR_on{width:10px; height:23px; background:url(/common/images/theme1/top/linkTab_rightOn.gif);}
+
+.tabL_off{width:10px; height:23px; background:url(/common/images/theme1/top/linkTab_leftOff.gif);}
+.tabC_off{height:23px; background:url(/common/images/theme1/top/linkTab_midOff.gif); font-weight:normal; color:#a6abae;}
+.tabR_off{width:10px; height:23px; background:url(/common/images/theme1/top/linkTab_rightOff.gif);}
+
+._close {width:100%; height:20px; margin:0; padding-top:7px; background-color:#eee; font:12px 'dotum'; color:#666; position:relative}
+._close .btn {width:30px; margin:0 0 0 95px; padding-left:15px; background:url(/common/images/theme1/top/btn_close.gif) no-repeat; cursor:pointer;}
+._close .btn2 {width:30px; margin:0 0 0 200px; padding-left:15px; background:url(/common/images/theme1/top/btn_close.gif) no-repeat; cursor:pointer;}
+
+/*----- [고정-TOP] 상단 버튼 디자인  -----*/
+.topMenu .right {float:right; padding-top:7px;}
+.topMenu .btn_config {height:23px; width:54px; float:left; background:url(/common/images/theme1/top/btn_config.gif) no-repeat;  cursor:pointer;}
+.topMenu .btn_logout {height:23px; width:45px; float:left; background:url(/common/images/theme1/top/btn_logout.gif) no-repeat; cursor:pointer;}
+
+/*----- [고정-TOP] 환경설정 레이어 디자인  -----*/
+.topMenu .btn_config .config_option{height:25px; width:108px; float:left; background:url(/common/images/theme1/top/cf_option.gif) no-repeat; margin:16px 0 0 -25px; padding:9px 0 0 10px; color:#767676;}
+.topMenu .btn_config .config_option a{text-decoration:none; color:#767676;}
+.topMenu .btn_config .config_option a:hover{text-decoration:underline; color:#767676;}
+
+/*----- [고정-TOP] 계열사 포틀렛 선택  박스-----*/
+.topMenu .SelBox{float:left; width:100px; height:19px; padding:0; margin:0 5px 0 0;}
+.topMenu .SelBox select{
+	float:left; 
+	border-style:solid; border-color:#a3a3a3 #cccccc #cccccc #a3a3a3; border-width: 1pt 1pt 1pt 1pt;
+	background-color:#fff; 	
+	width:100px; height:19px; 
+	margin:0; padding:0;
+	font-family:"돋움"; font-size:8pt; color: #646464;	
+}
+
+/*----- [고정-TOP] 전화번호 검색  -----*/
+.topMenu .search{float:left; width:130px; height:19px; padding:0; margin:0;}
+.topMenu .seaLeft{float:left; width:7px; height:19px; padding:0; margin:0;}
+.topMenu .seaRight{float:right; width:20px; height:19px; padding:0 10px 0 0; margin:0; cursor:pointer;}
+.topMenu .search .phoneField{
+	float:left; 
+	background:url(/common/images/theme1/top/seaTxt.gif) left top no-repeat;
+	border-style:solid; border-color:#a3a3a3 #cccccc #cccccc #a3a3a3; border-width: 1pt 0pt 1pt 0pt;
+	background-color:#fff; 
+	width:91px; 
+	height:19x; 
+	font-family:"돋움"; font-size:8pt; color: #646464;
+}
+
+/*----- [고정-TOP] TOP영역 배치  -----*/
+.topMenu .search .phoneFieldOn{
+	float:left; 
+	border-style:solid; border-color:#a3a3a3 #cccccc #cccccc #a3a3a3; border-width: 1pt 0pt 1pt 0pt;
+	background-color:#fff; 
+	width:91px; 
+	height:19x; 
+	font-family:"돋움"; font-size:8pt; color: #646464;
+}
+
+/*----- [고정] 상단 메뉴 1레벨   -----*/
+
+/* 내가 지금 새로 만드는거 */
+.mainMenu {height:20px; width:820px; float:right;} /* [mokwonkyun] width: 775 -> width : 600*/
+ul.menuBase {position:absolute; margin:0; padding:17px; list-style:none;}
+li.on {position:relative; display:inline; float:left; height:20px; padding:0 15px; }
+li.on a {font-family:Malgun Gothic; font-size:14px; font-weight:bold; text-decoration:none; color:#006cbf; cursor:pointer;}
+li.on a:hover {text-decoration:none; color:#006cbf;}
+li.off {position:relative; display:inline; float:left; height:20px; padding:0 15px; }
+li.off a {font-family:Malgun Gothic; font-size:14px; font-weight:bold; text-decoration:none; color:#444; cursor:pointer;}
+li.off a:hover {text-decoration:none; color:#006cbf;}
+li a div {font-family:Malgun Gothic; font-size:14px; font-weight:bold; margin:0px 0px 0px 0px; height:20px; text-align:center;}
+
+ul.subArea {visibility:hidden; width:820px; position:absolute; top:37px; z-index:12; padding:0px; left:0px;}
+
+li.submenu {display:inline; float:left; height:25px; margin:0; padding:0 15px; line-height:31px; overflow:hidden; background:url(/common/images/theme1/top/menu_separator.gif) top left no-repeat;}
+li.submenu a {font-size:12px; font-family:'dotum'; color:#FFF; font-weight:bold; text-decoration:none;}
+li.submenu a:hover{color:#fff200; font-weight:bold; text-decoration:underline;}
+
+/* 내가 지금 새로 만드는거 */
+
+.1depArrowPrev { width:14px; height:20px; float:left; position:relative; }
+.1depArrowNext { width:14px; height:20px; float:right; position:relative;}
+	
+/*----- [고정] 상단 메뉴 2레벨   -----*/
+#subMenu {	
+	display:no;
+	z-index:10; /* 레이어 순위 #10 */
+	position:absolute; top:85px; left:0px;
+	width:100%; height:30px;
+	margin:0 auto;
+	background:url(/common/images/theme1/top/bg_submenu2.gif) top center repeat-x;
+	}
+
+/*----- [고정] TICKER  -----*/
+.ticker div {overflow:hidden;}
+.ticker .btn {width:30px; float:left; margin:4px 0 0 15px;}
+.ticker .btn_up {width:14px; height:10px; position:relative; background:url(/common/images/theme1/top/btn_ticker.gif) 0 0 no-repeat; cursor:pointer;}
+.ticker .btn_dn {width:14px; height:11px; position:relative; background:url(/common/images/theme1/top/btn_ticker.gif) 0 -10px no-repeat; cursor:pointer;}
+.ticker ul.ticker_list {width:800px; height:30px; float:left; margin:0; padding:0;}
+.ticker ul.ticker_list li {margin:0; padding:0;display:block;}
+.ticker ul.ticker_list a {font-family:'dotum'; font-size:12px; color:#000; text-decoration:none;} /* [mokwonkyun] line-height:제거*/
+.ticker ul.ticker_list a:hover {color:#006cbf; text-decoration:underline;}
+
+
+/*----- [body] 컨텐츠 영역 구분  -----*/
+.upWrap {position:relative; display:block; float:left;}
+.upLeft, .upCenter, .upRight {float:left; display:inline; height:353px;}
+.upLeft {width:230px;}
+.upCenter {width:505px; margin:0 15px;}
+.upRight {width:230px;}
+
+/*----- [body] 이동 버튼  -----*/
+.visual {width:505px; height:253px;}
+.btn_circleBnr {float:right; height:21px;}
+.btn_circleBnr img{padding:4px 0px 0 0;}
+.btn_divisionBarUp {position:relative; float:left; display:block; width:995px; height:30px; background:url(/common/images/theme1/body/btn_barUp.gif) center center no-repeat; cursor:pointer}
+.btn_divisionBarDown {position:relative; float:left; display:block; width:995px; height:30px; background:url(/common/images/theme1/body/btn_barDown.gif) center center no-repeat; cursor:pointer}
+
+/*----- [고정] 계열사 공지사항 영역 -----*/
+.subsidiaryWrap{width:100%; height:96px; border-bottom:1px solid #e5e5e5; border-top:3px solid #5a5959;}
+.subsidiarytitle{width:131px; height:96px; background:url(/common/images/theme1/body/bg_subsidiary_title.gif) left center no-repeat; float:left; display:inline;}
+.subsidiarytitle div{padding-top:30px; text-align:center; font-weight:bold; line-height:14px;}
+.subsidiarytitle div img{padding:10px 0 0 82px; display:block;}
+.subsidiary_list{float:left; display:inline; width:374px;}
+
+/*----- [고정] 하단 고정 포틀렛 영역 -----*/
+.downWrap {position:relative; display:block; float:left;}
+.ptlA_groupTitle {float:left; width:994px; height:26px; background:url(/common/images/theme1/body/img_ptlA_gourp_title.gif) no-repeat;}
+.ptlAWrap {float:left; width:993px; margin-bottom:10px; border:solid #a8bfd9; border-width:1px 0 0 1px;}
+.ptlA {
+	float:left; width:330px; height:150px; 
+	border:solid #a8bfd9; border-width:0 1px 1px 0;
+	padding:0px;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#eff1f4');
+}
+
+/*----- [동적] 일정관리 포틀렛 -----*/
+#scheWrap div{float:left;}
+.scheTimeBox{width:145px; height:70px; background:url(/common/images/theme1/body/i_today.gif) 25px 15px no-repeat;}
+.scheTime{width:145px; padding:31px 0px 0px 25px; font-size: 15px; font-weight:bold;  position:absolute;}
+.scheToday{width:26px; height:16px; padding-top:31px; display: none; }
+.scheArrow{width:13px; height:13px; padding-top:30px; cursor:pointer; }
+.scheCalWrap{width:57px; height:70px; background:url(/common/images/theme1/body/bg_cal.gif) center no-repeat;}
+.scheCalDay{font-size: 17px; padding: 31px 0px 0px 19px;  position: absolute; font-weight: bold;}
+.scheContent{width:300px; height: 97px; margin-top:10px; overflow:auto;}
+.scheContent ul {margin:0; padding:2px 0px 0px 0px; list-style:none;} 
+.scheContent .listTD {height:19px; background:url(/common/images/theme1/body/etc_bullet.gif) 5px 5px no-repeat; padding-left:10px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
+#scheWrap A{font:12px 'dotum','돋움';  text-decoration:none;}
+#scheWrap A:hover { text-decoration:underline;}
+
+/*----- [동적] 지시업무 포틀렛 -----*/
+.tab_inst {	font:13px 'dotum'; cursor: pointer;	padding-left: 8px; }
+
+/*----- [고정] 계열사 공지사항 포틀렛 -----*/
+.ptlB_subsidiaryTable {width:352px; margin:12px 14px 12px 14px;}  /* [mokwonkyun] width:95%; -> width:300px;, margin :14px -> margin:12px 14px 12px 14px,*/
+
+/*----- [고정] ceo 메시지 포틀렛 -----*/
+.ceoMsg{border-bottom:1px solid #e5e5e5; border-top:3px solid #5a5959; width:229px; height:117px;}
+.ceoMsgWrap{width:229px; height:117px; margin:0 0 0 0; padding:0 0 0 0;  background:url(/common/images/theme1/body/img_ceo.gif) left bottom no-repeat; }
+.ceoMsgWrap span{margin:0 0 0 11px; float:left; display:inline;}
+.ceoMsgWrap img{margin:85px 0 0 0; float:left; display:inline;}
+
+/*----- [고정] 사규 포틀렛[songsunghoon] -----*/
+#bbsAtt div{float:left;}
+#bbsAtt .listTD1 {
+width:140px; height:19px; float:left; text-align: left;
+background:url(/common/images/theme1/body/etc_bullet.gif) 3px 4px no-repeat; padding-left:10px; 
+}
+#bbsAtt .listTD1 a{color:#646464;}
+#bbsAtt .tabL {width:13px; height:45px;	background:url(/common/images/theme1/sub/form_tabL.gif) 0px 7px no-repeat;}
+#bbsAtt .tabC {height:45px; background:url(/common/images/theme1/sub/form_tabC.gif) 0px 7px repeat-x;}
+#bbsAtt .tabR {width:17px; height:45px; background:url(/common/images/theme1/sub/form_tabR.gif) 0px 7px no-repeat;}
+#bbsAtt .tabL_on {width:13px; height:45px; background:url(/common/images/theme1/sub/form_tabL_on.gif) 0px 7px no-repeat;}
+#bbsAtt .tabC_on {height:45px; background:url(/common/images/theme1/sub/form_tabC_on.gif) 0px 7px repeat-x;}
+#bbsAtt .tabR_on {width:17px; height:45px; background:url(/common/images/theme1/sub/form_tabR_on.gif) 0px 7px no-repeat;}
+#bbsAtt A.form_tab_on {color:#000; font-weight:bold; text-decoration:none;}
+#bbsAtt A.form_tab {color:#666; text-decoration:none;}
+#bbsAtt A.form_tab span {position:relative; top:17px;}
+#bbsAtt A.form_tab_on span {position:relative; top:17px;}
+#bbsAtt .tab_double{display:none; width:300px; height:45px; margin-left:10px; border:0px solid red;}
+#bbsAtt .content{width:300px; margin-left:17px; margin-top:3px; height:92px; }
+
+/*----- [고정] 회장님메시지 포틀렛 -----*/
+.ceoMsgTxt{font:12px 'dotum'; color:#3b5998; text-decoration:none; padding:15px 0 0 6px;}
+
+/*----- [고정] 그룹공지 포틀렛 -----*/
+.groupWrap{width:229px; height:100px; border-bottom:1px solid #e5e5e5; border-top:3px solid #5a5959;}
+
+.ptlB_titleTable2 {height:28px; width:100%; background:url(/common/images/theme1/body/bg_ptlA_title.gif) repeat-x;}
+.ptlB_title2 {font:12px 'dotum'; font-weight:bold; color:#000; padding-left:12px;}
+
+.ptlB_groupTable {width:225px; padding:8px 5px 10px 5px;} /* [mokwonkyun] width:100% -> width:225px, padding:8px 5px 12px 5px; -> padding:8px 5px 10px 5px; */
+
+/*----- [고정] 주식 포틀렛 -----*/
+.stock{border:1px solid #cfd8e1; background-color:#edf2f7; width:227px; height:77px; text-align:center;} /* [mokwonkyun] width:230 -> 228px , height:77 -> 78*/
+
+/*----- [고정] 메시지센터 포틀렛 -----*/
+.insaWrap{border-bottom:1px solid #e5e5e5; border-top:3px solid #5a5959; width:190px; height:121px;}
+.insa{width:185px; height:25px; padding:12px 12px 0px 0px;}  	/* [mokwonkyun] padding: 12px  -> padding:12px 12px 0px 12px; */
+.insa2{padding:0px 0px 0px 0px;}  	/* [mokwonkyun] padding: 12px  -> padding:12px 12px 0px 12px; */
+.insaList{line-height:13pt; margin:3px 0 0 10px; color:#646464;}
+.photoBoxWrap{width:78px; height:76px; } /* widht:84 -> 78px border:1px solid #d7dbe0;*/
+
+.perInfor_pop{height:24px; float:left; background:url(/common/images/theme1/body/bg_perInforLeft.png) top left no-repeat; }
+.perInfor_pop span{
+	text-align:left; 
+	height:24px; 
+	padding:9px 3px 0 10px;
+	float:left; 
+	color:#fff; font-size:10px; font-weight:bold; font-family:"Malgun Gothic";
+}
+.perInfor_pop img{float:right; height:24px;}
+
+
+/*----- [고정] 마이비전 포틀렛 -----*/
+.myvisionWrap{border-top:3px solid #5a5959; border-bottom:1px solid #e5e5e5; width:230px; height:76px;}
+.myvisionWrap div{border-left:1px solid #e5e5e5; border-right:1px solid #e5e5e5; width:228px;height:76px;}
+.myvisionTable{background:url(/common/images/theme1/body/bg_vision.gif) 0 0 no-repeat; width:228px; height:73px;}
+.visionArea { padding:5px 0 0 10px; font:12px 'dotum'; color:#646464; line-height:15px; background:url(/common/images/theme1/body/bg_vision.gif) 0 0 no-repeat; display:none; width:218px; height:63px; overflow-x:hidden; overflow-y:auto; border:0; background:clear; }
+
+/*----- [고정] 링크 포틀렛 -----*/
+.linkWrap{border-top:3px solid #5a5959; border-bottom:1px solid #e5e5e5; width:230px; height:130px;}
+.linkWrap div{border-left:1px solid #e5e5e5; border-right:1px solid #e5e5e5; width:228px;height:130px;}
+.linkTable {width:100%; margin:6px 10px 6px 10px;}
+.linkTable .listTD {height:19px; background:url(/common/images/theme1/body/etc_bullet.gif) 0 6px no-repeat; padding-left:7px;}
+.linkTable .listTD_R {height:18px; text-align:right; color:#b1b1b1;}
+
+/*----- [고정] 설문조사 포틀렛 -----*/
+.pollTable{background:url(/common/images/theme1/body/bg_poll.gif) 0 0 repeat-x; width:228px; height:73px;}
+.poll_tit{background:url(/common/images/theme1/body/tit_poll.png) top left no-repeat; width:228px; height:73px;}
+.poll_tit img{padding:6px 3px 0 0; float:right;}
+.poll_list{ position: absolute; top:35px; left:0px; width:226px; height:36px; overflow-y:auto; overflow-x:hidden;}
+.poll_list table{ padding:0; margin:0px 0 0 10px; cursor:pointer;}
+.poll_list .listTD{height:18px; background:url(/common/images/theme1/body/etc_bullet.gif) 0 6px no-repeat; padding-left:7px; text-overflow:ellipsis; overflow:hidden; border: 0px solid red; white-space: nowrap; cursor:pointer; margin-left: 10px;}
+
+/*----- [동적] 생일자 포틀렛  : songsunghoon-----*/
+#bdayWrap div{float:left;}
+.bdayTimeBox{width:145px; height:70px; background:url(/common/images/theme1/body/i_today.gif) 25px 15px no-repeat;}
+.bdayTime{width:145px; padding:31px 0px 0px 25px; font-size: 15px; font-weight:bold;  position:absolute;}
+.bdayToday{width:26px; height:16px; padding-top:31px; display: none; }
+.bdayArrow{width:13px; height:13px; padding-top:30px; cursor:pointer; }
+.bdayCalWrap{width:57px; height:70px; background:url(/common/images/theme1/body/bg_cal.gif) center no-repeat;}
+.bdayCalDay{font-size: 17px; padding: 31px 0px 0px 19px;  position: absolute; font-weight: bold;}
+.bdayContent{width:300px; height: 97px; margin-top:10px; overflow:auto;}
+.bdayContent ul {margin:0; padding:2px 0px 0px 0px; list-style:none;} 
+.bdayContent .listTD {height:19px; background:url(/common/images/theme1/body/etc_bullet.gif) 5px 5px no-repeat; padding-left:12px;}
+
+/*----- [동적] 생일자 포틀렛-메일팝업 : songsunghoon-----*/
+.bir_body{margin:0;padding:0; background:url(/common/images/theme1/body/bir_back.jpg) 0 0 no-repeat;}
+#bir_wrap{width:350px; height:300px;}
+.bir_name{padding:64px 0 0 20px;}
+.bir_name span{color:#fff799; font-size:1em; font-weight:bold;}
+.bir_table{padding:18px 10px 0 10px; }
+.bir_table table{border-collapse:collapse; padding:15px 10px 0 10px; line-height:160%;}
+.bir_table table tr td.name{background-color:#e9edf8; text-align:center; font-size:0.95em; border:1px solid #dddcdc; color:#646464;}
+.bir_table table tr td.value{background-color:#fff; border:1px solid #dddcdc; padding:5px 0 5px 7px; color:#646464;}
+.bir_write{font-family:'돋움';	font-size:9pt; color: #646464; background-position: left; border-style:solid; border-color:#a3a3a3 #cccccc #cccccc #a3a3a3; border-width: 1pt 1pt 1pt 1pt; width:95%;}
+.bir_write2{font-family:'돋움';	font-size:9pt; color: #646464; background-position: left; border-style:solid; border-color:#a3a3a3 #cccccc #cccccc #a3a3a3; border-width: 1pt 1pt 1pt 1pt; width:95%; height:120px;}
+
+/*----- [공통] 하단 copyright -----*/
+.copyright{width:100%; text-align:center;}
+
+
+/*----- [공통] 그룹사 선택 팝업창  -----*/
+.ijgroupChoiceWrap{width:480px;  border:5px solid #457fde; background:url(/common/images/theme1/body/img_paper.gif) bottom right no-repeat; margin:0 auto;}
+.ijgroupChoiceTit{border-bottom:1px solid #e7e7e7; height:46px; width:100%;}
+.ijgroupChoiceTit img{padding:15px 0 0 20px;}
+.ijgroupChoiceBtn{width:100%; text-align:center; font-size:15px; color:#333333; font-family:"Malgun Gothic"; font-weight:bold; padding:30px 0 50px 0;}
+.ijgroupChoiceBtn table tr td{bottom:15px;}
+.ijgroupChoice_left{background:url(/common/images/theme1/body/btn_ijgroupChoice_left.gif) 0 0 no-repeat; width:30px; height:47px;}
+.ijgroupChoice_mid{background:url(/common/images/theme1/body/btn_ijgroupChoice_mid.gif) 0 0 repeat-x; height:47px;}
+.ijgroupChoice_right{padding-right:10px; background:url(/common/images/theme1/body/btn_ijgroupChoice_right.gif) 0 0 no-repeat; width:30px; height:47px;}
+
+/*----- [공통] 메모장 포틀렛  -----*/ 
+.memo { font:12px 'dotum'; color:#646464; padding:5px 0px 0px 10px; line-height:15px; background:url(/common/images/theme1/body/bg_memoBox.gif) 0 0 no-repeat; width:320px; height:190px; overflow-x:hidden; overflow-y:auto; border:0; background:clear; }
+
+/*----- SMS [songsunghoon] -----*/
+#smsWrap {width:630px; margin: 0px 0px 0px 25px;}
+#smsWrap .dtree{height:305px;}
+	
+#titleWarp div {float:left;}
+#titleWarp {width:100%; height:39px; margin-bottom:8px;}
+#titleWarp .titleText {width:220px; height:37px; padding-left:17px; text-align:left; font:16px 'dotum'; color:#4d607f; font-weight:bold;background:url(/common/images/theme1/sub/i_page_title.gif) 0px 1px no-repeat; line-height:2.4;}
+#titleWarp .titleCnt {width:390px; height:37px; font:12px 'dotum'; color:#4d607f; font-weight:bold; text-align:right; line-height:3.9;}
+#titleWarp .titleLine {width:100%; height:2px; background-color:#8b9eba;}
+
+#userWarp {width:455px; float:left}
+#userWarp .listTH {width:100%;height:30px;background-color:#e6ebf2;border-style:solid;border-width:1px 0px 1px 0px;Border-color:#b3c3dc #b3c3dc #cbd5e3 #cbd5e3;color:#3d6299;text-align:center;line-height:2.6;}
+#userWarp .treeWarp {width:188px; padding:8px 20px 0px 0px; float:left;}
+#userWarp .listWrap {width:247px; float:left;}
+#userWarp .listWrap .listTH div {float:left;}
+#userWarp .listWrap .listTH{
+	width:245px; height:25px; font:12px 'dotum'; font-weight:bold; color:#666666; border-style:solid; border-width:1px 1px 0px 1px;
+	Border-color:#b3c3dc #b3c3dc #cbd5e3 #b3c3dc; text-align: left; line-height: 2.1; background:url(/common/images/theme1/body/bg_ptlA_title.gif) repeat-x;
+	margin:0px;
+}
+#userWarp .listWrap .listBody {
+	width:245px; height:157px; border-style:solid; border-width:1px 1px 1px 1px; Border-color:#cbd5e3 #b3c3dc #b3c3dc #b3c3dc;
+	font:12px 'dotum'; color:#666666; margin:0px 0px 0px 0px; text-align: left; line-height: 2.0; overflow-y: auto;
+}
+#userWarp .listWrap .listBody .listUser{width:100%; height:19px; margin:0px; font:12px 'dotum'; color:#666666; text-align: left; line-height: 2.0; float:none;}
+#userWarp .listWrap .listBtn {width:100%; height:20px; margin: 8px 0px 8px 0px;}
+#userWarp .listWrap .listBtn div{float:left;}
+#userWarp .listWrap .listBtn .arrow { 
+	border:1px solid #B2BED1;
+	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFF, EndColorStr=#E7E7E7);
+	font-family:dotum; letter-spacing:-1px; line-height:14px; color:#343434; font-size:12px; padding-top:3px; cursor:pointer;
+	margin-bottom:1px; height:21px; vertical-align: middle;
+}
+
+.listChk {width:17px; height: 19px; cursor: pointer; float:left;}
+.listName {width:100px; height: 19px; text-align: center; float:left; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
+.listNo {height: 19px; text-align:left; float:left;}
+
+#msgWarp div{float:left;}
+#msgWarp {width:155px; margin-left: 20px; float:left;}
+#msgWarp .listTH {width:100%;height:30px;background-color:#e6ebf2;border-style:solid;border-width:1px 0px 1px 0px;Border-color:#b3c3dc #b3c3dc #cbd5e3 #cbd5e3;color:#3d6299;text-align:center;line-height:2.6;}
+
+#smsWrap .errMsg {width:100%; height:30px; text-align:right; font:13px 'dotum'; color:#4d607f; font-weight:bold; line-height: 3.0; float:left;}
+
+
+
+/*----- [mokwonkyun] 포틀렛 생성 관련 -----*/
+.ptlB {	float:left;	border:solid #d7d7d7; border-width:1px 1px 1px 1px;	padding:0px; margin-top:-1px; }
+.default { background:#fff;	width:330px; padding:0px; }
+.defaultMin { background:#fff; width:330px;	padding:0px; }
+.max { background:#fff;	width:992px; padding:0px; }
+.maxMin { background:#fff; width:992px;	padding:0px; }
+.portlet_move { background:#fff; width:330px; padding:0px; }
+.foot {	background:#fff; width:100%; height:13px; padding:0px; background:url(/common/images/theme1/body/i_page.gif) right bottom no-repeat;}
+
+.ptlBWrap {float:left; width:993px; margin-bottom:20px; border:solid #d7d7d7; border-width:0px 0px 0px 0px;}
+.ptlB_back {
+	float:left; width:330px; height:220px; 
+	border:solid #d7d7d7; border-width:0 1px 1px 0;
+	padding:0px;
+	background:url(/common/images/theme1/body/i_page.gif) right bottom no-repeat;	
+}
+.ptlB_titleTable {height:30px; width:100%; border:solid #d7d7d7; border-width:0 0 1px 0; background:url(/common/images/theme1/body/bg_ptlB_title.gif) repeat;}
+.ptlB_title {padding-left:18px; font:14px 'dotum'; font-weight:bold; color:#333333; cursor:pointer;} /*[mokwonkyun] cursor:porinter 추가, margin-left:18px -> padding-left:18px*/
+
+.btn_wrap{float:right;} 
+.btn_ptlB_01 {float:left; width:4px; height:12px; background:url(/common/images/theme1/body/btn_ptlB_01.gif) no-repeat; cursor:pointer} /* Prev  */
+.btn_ptlB_02 {float:left; width:4px; height:12px; background:url(/common/images/theme1/body/btn_ptlB_02.gif) no-repeat; cursor:pointer} /* Next  */
+.btn_ptlB_03 {float:left; width:20px; height:12px; background:url(/common/images/theme1/body/btn_ptlB_03.gif) no-repeat; cursor:pointer} /* more  */
+.btn_ptlB_04 {float:left; width:6px; height:12px; background:url(/common/images/theme1/body/btn_ptlB_04.gif) no-repeat; cursor:pointer} /* del  */
+.btn_ptlB_05 {float:left; width:8px; height:12px; background:url(/common/images/theme1/body/btn_ptlB_05.gif) no-repeat; cursor:pointer} /* 최대화  */
+.btn_ptlB_06 {float:left; width:8px; height:12px; background:url(/common/images/theme1/body/btn_ptlB_06.gif) no-repeat; cursor:pointer} /* 열기  */
+.btn_ptlB_07 {float:left; width:8px; height:12px; background:url(/common/images/theme1/body/btn_ptlB_07.gif) no-repeat; cursor:pointer} /* 접기  */
+.btn_ptlB_sep{float:left; width:11px; height:12px; background:url(/common/images/theme1/body/btn_ptlB_sep.gif) no-repeat;cursor:pointer} /* Prev  */
+.plt_btn {cursor:pointer; border:0; padding:2px 0px 0 0;} /* [mokwonkyun] 추가*/
+
+.ptlB_bodyTable {width:300px; margin:12px 12px 0px 12px;} /* [mokwonkyun] margin:12px -> margin:12px 12px 0px 12px; */
+
+/*----- [mokwonkyun] 포틀렛 구성 관련 -----*/
+.column { width: 331px; float: left; padding-bottom: 140px;}
+	.portlet { margin: 0 1em 1em 0; }
+	.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
+	.portlet-header .ui-icon { float: right; }
+	.portlet-content { padding: 0.4em; }
+	.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; !important; }
+	.ui-sortable-placeholder * { visibility: hidden; }
+
+/* [mokwonkyun] 추가 */
+.ptlA_base {
+	height:140px;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#eff1f4');
+}
+
+.ptlA_bodyTable {width:300px; margin-left:17px;}
+.ptlA_title {font:14px 'dotum'; font-weight:bold; color:#333333;}

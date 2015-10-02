@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	수정일                 수정자                          수정내용
+  =========     =======    =================================================
+  2011.9.2   	정진오     	 	DeptSchdulManage.selectDeptSchdulManageRetrieve에 SCHDUL_CHARGER_NAME 추가(Daily 조회시 필요)
+  2011.9.7		이기하			DeptSchdulManage.insertDeptSchdulManage에 schdulChargerName -> schdulChargerId 컬럼변경
+  								DeptSchdulManage.updateDeptSchdulManage에 schdulChargerName -> schdulChargerId 컬럼변경
+  								DeptSchdulManage.selectDeptSchdulManageDetail에 EMPLYR_ID -> ESNTL_ID 컬럼변경
+  2011.10.05    서준식               보안 취약점 점검사항 반영 $->#변경	
+-->
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SalaryManage">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="comDefaultVO" type="egovframework.com.cmm.ComDefaultVO"/>
+	<typeAlias  alias="SalaryManageVO" type="egovframework.com.sal.service.SalaryManageVO"/>
+	<typeAlias  alias="SalaryUserMonelyVO" type="egovframework.com.sal.service.SalaryUserMonelyVO"/>
+
+	<resultMap id="SalaryManage" class="egovframework.com.sal.service.SalaryManageVO">
+		<result property="salaryId" column="SCHDUL_ID" columnIndex="1"/>
+		<result property="salarySe" column="SCHDUL_SE" columnIndex="2"/>
+
+		<result property="salaryPro" column="SCHDUL_PRO" columnIndex="3"/>
+		<result property="salaryLate" column="SCHDUL_LATE" columnIndex="4"/>
+		<result property="salaryBgnde" column="SCHDUL_BGNDE" columnIndex="5"/>
+		<result property="salaryEndde" column="SCHDUL_ENDDE" columnIndex="6"/>
+		<result property="salaryProTime" column="SCHDUL_PROTIME" columnIndex="7"/>
+		<result property="salaryLateTime" column="SCHDUL_LATETIME" columnIndex="8"/>
+		<result property="salaryHolidayTime" column="SCHDUL_NIGHTTIME" columnIndex="8"/>
+		
+		<result property="salaryChargerId" column="SCHDUL_CHARGER_ID" columnIndex="12"/>
+		<result property="salaryChargerName" column="SCHDUL_CHARGER_NAME" columnIndex="13"/>
+
+		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM" columnIndex="16" />
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="17"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDT_PNTTM" columnIndex="18"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="19" />
+	</resultMap>
+	<resultMap id ="SalaryUser" class="egovframework.com.sal.service.SalaryUserMonelyVO">
+	    <result property="esntlId" column="ESNTL_ID" columnIndex="1" />
+	    <result property="emplyrId" column="EMPLYR_ID" columnIndex="2" />
+	    <result property="userNm" column="USER_NM" columnIndex="3" />
+	    <result property="timeSalary" column="TIME_SALARY" columnIndex="4" />
+	    <result property="jobTime" column="JOB_TIME" columnIndex="5" />
+	    <result property="fullWorkingPension" column="FULL_WORKING_PENSION" columnIndex="6" />
+	    <result property="proPension" column="PRO_PENSION" columnIndex="7" />
+	    <result property="holidayPersion" column="HOLIDAY_PENSION" columnIndex="8" />
+	    <result property="holidayAfterPersion" column="HOLIDAY_AFTER_PENSION" columnIndex="9" />
+	    <result property="familyPension" column="FAMILY_PENSION" columnIndex="10" />
+	    <result property="longevityPension" column="LONGEVITY_PENSION" columnIndex="11" />
+	    <result property="nightPension" column="NIGHT_PENSION" columnIndex="12" />
+	    <result property="texesPension" column="TEXES" columnIndex="13" />
+	</resultMap>
+
+	<!-- 부서일정정보::목록조회_게시물정보 -->
+	<select id="SalaryManage.selectDeptSchdulManage" parameterClass="comDefaultVO" resultClass="egovMap">
+	 <![CDATA[
+		SELECT
+			A.SCHDUL_ID,
+			A.SCHDUL_SE,
+			A.SCHDUL_PRO,
+			A.SCHDUL_LATE,
+			A.SCHDUL_BGNDE SCHDUL_BGNDE,
+			A.SCHDUL_ENDDE,
+			A.SCHDUL_PROTIME,
+			A.SCHDUL_LATETIME,
+			A.SCHDUL_NIGHTTIME,
+			A.SCHDUL_CHARGER_ID,
+			A.FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			A.LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM SALARYMONEY A
+		WHERE 1=1
+
+	 ]]>
+	 <isNotEmpty property="searchKeyword">
+	 	<isNotEqual property="searchKeyword" compareValue="">
+ 				AND SCHDUL_NM LIKE CONCAT ('%', #searchKeyword#,'%')
+	 	</isNotEqual>
+	 </isNotEmpty>
+	 <![CDATA[
+		ORDER BY A.FRST_REGIST_PNTTM DESC
+		LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	]]>
+	</select>
+
+	<!-- 부서일정정보::목록조회_게시물 총갯수  -->
+	<select id="SalaryManage.selectDeptSchdulManageCnt" parameterClass="comDefaultVO" resultClass="int">
+		SELECT
+		COUNT(*) totcnt
+		FROM SALARYMONEY
+		WHERE 1=1
+	 <isNotEmpty property="searchKeyword">
+	 	<isNotEqual property="searchKeyword" compareValue="">
+ 				AND SCHDUL_NM LIKE CONCAT ('%', #searchKeyword#,'%')
+	 	</isNotEqual>
+	 </isNotEmpty>
+	</select>
+
+
+	<!-- 부서일정정보::목록조회 -->
+	<select id="SalaryManage.selectDeptSchdulManageRetrieve" parameterClass="java.util.Map" resultClass="egovMap">
+	 <![CDATA[
+		SELECT
+			A.SCHDUL_ID,
+			/* A.SCHDUL_SE,
+			A.SCHDUL_PRO, */
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = "COM400" AND CODE = A.SCHDUL_SE) AS SCHDUL_SE,
+			(SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID="COM410" AND CODE = A.SCHDUL_PRO) AS SCHDUL_PRO,
+			A.SCHDUL_LATE,
+			A.SCHDUL_BGNDE SCHDUL_BGNDE,
+			A.SCHDUL_ENDDE,
+			A.SCHDUL_PROTIME,
+			A.SCHDUL_LATETIME,
+			A.SCHDUL_NIGHTTIME,
+			A.SCHDUL_CHARGER_ID,
+			(SELECT USER_NM FROM COMTNEMPLYRINFO WHERE ESNTL_ID = A.SCHDUL_CHARGER_ID) SCHDUL_CHARGER_NAME,
+			A.FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			A.LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM SALARYMONEY A
+		WHERE 1=1
+			AND A.SCHDUL_CHARGER_ID = #salaryUserId#
+	 ]]>
+
+	 <isNotEmpty property="searchMode">
+	 <isEqual property="searchMode" compareValue="MONTH">
+
+		 <isNotEmpty property="searchMonth">
+		 	<isNotEqual property="searchMonth" compareValue="">
+		 	 AND (#searchMonth# BETWEEN SUBSTRING(A.SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(A.SCHDUL_ENDDE, 1, 6) )
+		 	</isNotEqual>
+		 </isNotEmpty>
+
+	 </isEqual>
+	 <isEqual property="searchMode" compareValue="WEEK">
+	 <![CDATA[
+		AND (
+		 ( SUBSTRING(A.SCHDUL_BGNDE,1,8) > #schdulBgnde# AND SUBSTRING(A.SCHDUL_BGNDE,1,8) <= #schdulEndde#)
+		OR
+		 ( SUBSTRING(A.SCHDUL_ENDDE,1,8) > #schdulBgnde# AND SUBSTRING(A.SCHDUL_BGNDE,1,8) <= #schdulEndde#)
+		)
+	]]>
+	 </isEqual>
+	 <isEqual property="searchMode" compareValue="DAILY">
+	 <![CDATA[
+	 	 AND (#searchDay# BETWEEN SUBSTRING(A.SCHDUL_BGNDE, 1, 8)  AND SUBSTRING(A.SCHDUL_ENDDE, 1, 8) )
+	  ]]>
+	 </isEqual>
+	 </isNotEmpty>
+
+	 <isNotEmpty property="searchKeyword">
+	 	<isNotEqual property="searchKeyword" compareValue="">
+	 		
+
+			<isEqual property="searchCondition" compareValue="SCHDUL_SE">
+ 				AND SCHDUL_SE LIKE CONCAT ('%', #searchKeyword#,'%')
+ 			</isEqual> 	
+
+	 	</isNotEqual>
+	 </isNotEmpty>
+
+	</select>
+	
+	<!-- 근무일 정보::입력  -->
+	<insert id="SalaryManage.insertSalaryManage">
+	 <![CDATA[
+
+		INSERT INTO SALARYMONEY (
+			SCHDUL_ID,
+			SCHDUL_SE,
+			SCHDUL_PRO,
+			SCHDUL_LATE,
+			SCHDUL_BGNDE,
+			SCHDUL_ENDDE,
+			SCHDUL_PROTIME,
+			SCHDUL_LATETIME,
+			SCHDUL_NIGHTTIME,
+			SCHDUL_CHARGER_ID,
+			FRST_REGIST_PNTTM,
+			FRST_REGISTER_ID,
+			LAST_UPDT_PNTTM,
+			LAST_UPDUSR_ID
+		)VALUES(
+			#salaryId#,
+			#salarySe#,
+			#salaryPro#,
+			#salaryLate#,
+			#salaryBgnde#,
+			#salaryEndde#,
+			#salaryProTime#,
+			#salaryLateTime#,
+			#salaryNightTime#,
+			#salaryChargerId#,
+			sysdate(),
+			#frstRegisterId#,
+			sysdate(),
+			#lastUpdusrId#
+		)
+
+	 ]]>
+	</insert>
+	
+	<!-- 근무일정 정보 삭제 -->
+	<delete id="SalaryManage.deleteSalaryManage">
+		DELETE FROM SALARYMONEY
+		WHERE SCHDUL_ID = #salaryId#
+	</delete>
+	
+	<!-- 근무일정 상세보기 VO형식-->
+	<select id="SalaryManage.selectSalaryManageDetailVO" resultMap="SalaryManage">
+		SELECT
+			A.SCHDUL_ID,
+			A.SCHDUL_SE,
+			A.SCHDUL_PRO,
+			A.SCHDUL_LATE,
+			A.SCHDUL_BGNDE,
+			A.SCHDUL_ENDDE,
+			A.SCHDUL_PROTIME,
+			A.SCHDUL_LATETIME,
+			A.SCHDUL_NIGHTTIME,
+			A.SCHDUL_CHARGER_ID,
+			(SELECT USER_NM FROM COMTNEMPLYRINFO WHERE ESNTL_ID = A.SCHDUL_CHARGER_ID) SCHDUL_CHARGER_NAME,
+			A.FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			A.LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM SALARYMONEY A
+		WHERE 1=1
+		AND SCHDUL_ID = #salaryId#
+	</select>
+	
+	<!-- 근무일정 상세보기 -->
+	<select id = "SalaryManage.selectSalaryManageDetail" resultClass="egovMap">
+		SELECT
+			A.SCHDUL_ID,
+			A.SCHDUL_SE,
+			A.SCHDUL_PRO,
+			A.SCHDUL_LATE,
+			A.SCHDUL_BGNDE,
+			A.SCHDUL_ENDDE,
+			A.SCHDUL_PROTIME,
+			A.SCHDUL_LATETIME,
+			A.SCHDUL_NIGHTTIME,
+			A.SCHDUL_CHARGER_ID,
+			(SELECT USER_NM FROM COMTNEMPLYRINFO WHERE ESNTL_ID = A.SCHDUL_CHARGER_ID) SCHDUL_CHARGER_NAME,
+			A.FRST_REGIST_PNTTM,
+			A.FRST_REGISTER_ID,
+			A.LAST_UPDT_PNTTM,
+			A.LAST_UPDUSR_ID
+		FROM SALARYMONEY A
+		WHERE 1=1
+		AND SCHDUL_ID = #salaryId#
+	</select>
+	
+	<update id="SalaryManage.updateSalaryManage">
+		UPDATE SALARYMONEY
+			SET
+				SCHDUL_SE = #salarySe#,
+				SCHDUL_PRO = #salaryPro#,
+				SCHDUL_LATE = #salaryLate#,
+				SCHDUL_BGNDE = #salaryBgnde#,
+				SCHDUL_ENDDE = #salaryEndde#,
+				SCHDUL_PROTIME =#salaryProTime#,
+				SCHDUL_LATETIME =#salaryLateTime#,
+				SCHDUL_NIGHTTIME = #salaryNightTime#,
+				LAST_UPDT_PNTTM = sysdate(),
+				LAST_UPDUSR_ID = #lastUpdusrId#
+			WHERE SCHDUL_ID = #salaryId#
+	</update>
+	
+	<!-- 급여 계산 Command형 -->
+	<select id="SalaryManage.selectSalaryCalculation" parameterClass="java.util.Map" resultClass="String">
+	    <isNotEmpty property="sumMode">
+	        /*주간 잔업시간 */
+			<isEqual property="sumMode" compareValue="sumProTime">
+			<![CDATA[
+				SELECT SUM(SCHDUL_PROTIME) FROM SALARYMONEY WHERE SCHDUL_SE = '1' AND SCHDUL_PRO = '1'
+				]]>
+			</isEqual>
+			
+			/* 야간 근무일 */
+			<isEqual property="sumMode" compareValue="sumNightProDay">
+			<![CDATA[
+				SELECT COUNT(*) FROM SALARYMONEY WHERE SCHDUL_SE = '2'
+			]]>
+			</isEqual>
+			
+			/* 야간 잔업시간 */
+			<isEqual property="sumMode" compareValue="sumNightTime">
+			<![CDATA[
+				SELECT SUM(SCHDUL_PROTIME) FROM SALARYMONEY WHERE SCHDUL_SE = '2'
+			]]>
+			</isEqual>
+			
+			/* 특근 근무일 */
+			<isEqual property="sumMode" compareValue="sumHolidayDay">
+			<![CDATA[
+				SELECT COUNT(*) FROM SALARYMONEY WHERE SCHDUL_SE = '3'
+			]]>
+			</isEqual>
+			
+			/* 특근 잔업시간 */
+			<isEqual property="sumMode" compareValue="sumHolidayProTime">
+			<![CDATA[
+				SELECT SUM(SCHDUL_PROTIME) FROM SALARYMONEY WHERE SCHDUL_SE = '3' AND SCHDUL_PRO = '1'
+			]]>
+			</isEqual>
+			
+			/* 야간 특근 근무일 */
+			<isEqual property="sumMode" compareValue="sumHolidayNightDay">
+			<![CDATA[
+				SELECT COUNT(*) FROM SALARYMONEY WHERE SCHDUL_SE = '4'
+			]]>
+			</isEqual>
+			
+			/* 야간 특근 잔업시간 */
+			<isEqual property="sumMode" compareValue="sumHolidayNightDay">
+			<![CDATA[
+				SELECT SUM(SCHDUL_PROTIME) FROM SALARYMONEY WHERE SCHDUL_SE = '4' AND SCHDUL_PRO = '1'
+			]]>
+			</isEqual>
+		</isNotEmpty>
+
+		<isNotEmpty property="searchMode">
+			<isEqual property="searchMode" compareValue="MONTH">
+				<isNotEmpty property="searchMonth">
+					<isNotEqual property="searchMonth" compareValue="">
+						AND (#searchMonth# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(SCHDUL_ENDDE, 1, 6) )
+					</isNotEqual>
+				</isNotEmpty>
+			</isEqual>
+			<isEqual property="searchMode" compareValue="WEEK">
+			<![CDATA[
+				AND (
+					( SUBSTRING(SCHDUL_BGNDE,1,8) > #schdulBgnde# AND SUBSTRING(SCHDUL_BGNDE,1,8) <= #schdulEndde#)
+				OR
+					( SUBSTRING(SCHDUL_ENDDE,1,8) > #schdulBgnde# AND SUBSTRING(SCHDUL_BGNDE,1,8) <= #schdulEndde#)
+					)
+			]]>
+			</isEqual>
+			<isEqual property="searchMode" compareValue="DAILY">
+			<![CDATA[
+				AND (#searchDay# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 8)  AND SUBSTRING(SCHDUL_ENDDE, 1, 8) )
+			]]>
+			</isEqual>
+		</isNotEmpty>	 
+	    
+			AND SCHDUL_CHARGER_ID = #salaryUserId#
+
+	</select>
+	
+	<!-- 급여 계산 List형 -->
+	<select id="SalaryManage.selectListSalaryCalculation" parameterClass="java.util.Map" resultClass="egovMap">
+		SELECT
+			/* 특근 잔업시간 */
+			(SELECT IFNULL (SUM(SCHDUL_PROTIME), 0) FROM SALARYMONEY WHERE SCHDUL_SE = '4' AND SCHDUL_PRO = '1' AND SCHDUL_CHARGER_ID = #salaryUserId# AND (#searchMonth# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(SCHDUL_ENDDE, 1, 6) )) AS SUM_HOLIDAY_NIGHT_PRO_TIME,
+			/* 잔업시간 */
+			(SELECT IFNULL (SUM(SCHDUL_PROTIME)-SUM_HOLIDAY_NIGHT_PRO_TIME, 0) FROM SALARYMONEY WHERE SCHDUL_PRO = '1' AND SCHDUL_CHARGER_ID = #salaryUserId# AND (#searchMonth# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(SCHDUL_ENDDE, 1, 6) )) AS SUM_PRO_TIME,
+			/* 야간 근무일 */
+			(SELECT IFNULL (COUNT(*), 0) FROM SALARYMONEY WHERE SCHDUL_SE = '2' AND SCHDUL_CHARGER_ID = #salaryUserId# AND (#searchMonth# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(SCHDUL_ENDDE, 1, 6) )) AS SUM_NIGHT_PRO_DAY,
+			/* 야간수당 시간 */
+			(SELECT IFNULL (SUM(SCHDUL_NIGHTTIME), 0) FROM SALARYMONEY WHERE  SCHDUL_CHARGER_ID = #salaryUserId# AND (#searchMonth# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(SCHDUL_ENDDE, 1, 6) )) AS SUM_NIGHT_TIME,
+			/* 특근 근무일 */
+			(SELECT IFNULL (COUNT(*), 0) FROM SALARYMONEY WHERE SCHDUL_SE = '3' AND SCHDUL_CHARGER_ID = #salaryUserId# AND (#searchMonth# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(SCHDUL_ENDDE, 1, 6) )) AS SUM_HOLIDAY_DAY,
+			/* 특근 잔업시간 */
+			(SELECT IFNULL (SUM(SCHDUL_PROTIME), 0) FROM SALARYMONEY WHERE SCHDUL_SE = '3' AND SCHDUL_CHARGER_ID = #salaryUserId# AND (#searchMonth# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(SCHDUL_ENDDE, 1, 6) )) AS SUM_HOLIDAY_PRO_TIME,
+			/* 야간 특근 근무일 */
+			(SELECT COUNT(*) FROM SALARYMONEY WHERE SCHDUL_SE = '4' AND SCHDUL_CHARGER_ID = #salaryUserId# AND (#searchMonth# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(SCHDUL_ENDDE, 1, 6) )) AS SUM_HOLIDAY_NIGHT_DAY
+			
+		FROM SALARYMONEY
+		WHERE 1=1
+			AND SCHDUL_CHARGER_ID = #salaryUserId#
+			
+		<isNotEmpty property="searchMode">
+			<isEqual property="searchMode" compareValue="MONTH">
+				<isNotEmpty property="searchMonth">
+					<isNotEqual property="searchMonth" compareValue="">
+						AND (#searchMonth# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 6)  AND SUBSTRING(SCHDUL_ENDDE, 1, 6) )
+					</isNotEqual>
+				</isNotEmpty>
+			</isEqual>
+			<isEqual property="searchMode" compareValue="WEEK">
+			<![CDATA[
+				AND (
+					( SUBSTRING(SCHDUL_BGNDE,1,8) > #schdulBgnde# AND SUBSTRING(SCHDUL_BGNDE,1,8) <= #schdulEndde#)
+				OR
+					( SUBSTRING(SCHDUL_ENDDE,1,8) > #schdulBgnde# AND SUBSTRING(SCHDUL_BGNDE,1,8) <= #schdulEndde#)
+					)
+			]]>
+			</isEqual>
+			<isEqual property="searchMode" compareValue="DAILY">
+			<![CDATA[
+				AND (#searchDay# BETWEEN SUBSTRING(SCHDUL_BGNDE, 1, 8)  AND SUBSTRING(SCHDUL_ENDDE, 1, 8) )
+			]]>
+			</isEqual>
+		</isNotEmpty>	 
+	    
+	</select>	
+	
+	<!-- 유저 급여 정보 등록  -->
+	<insert id="SalaryManage.insertSalaryUserMonely">
+	     <![CDATA[
+
+		INSERT INTO SALARYDATA (
+			ESNTL_ID,
+			EMPLYR_ID,
+			USER_NM,
+			TIME_SALARY,
+			JOB_TIME,
+			FULL_WORKING_PENSION,
+			FAMILY_PENSION,
+			LONGEVITY_PENSION,
+			TEXES,
+			FRST_REGISTER_ID,
+			FRST_REGIST_PNTTM,
+			LAST_UPDUSR_ID,
+			LAST_UPDT_PNTTM
+		)VALUES(
+			#esntlId#,
+			#emplyrId#,
+			#userNm#,
+			#timeSalary#,
+			#jobTime#,
+			#fullWorkingPension#,
+			#familyPension#,
+			#longevityPension#,
+			#texes#,
+			#frstRegisterId#,
+			sysdate(),
+			#lastUpdusrId#,
+			sysdate()
+		)
+
+	 ]]> 
+	    
+	</insert>
+	
+	<!-- 유저 급여 정보 업데이트  -->
+	<update id="SalaryManage.updateSalaryUserMonely">
+	     <![CDATA[
+
+		UPDATE SALARYDATA 
+			SET
+				TIME_SALARY = #timeSalary#,
+				JOB_TIME = #jobTime#,
+				FULL_WORKING_PENSION = #fullWorkingPension#,
+				FAMILY_PENSION = #familyPension#,
+				LONGEVITY_PENSION = #longevityPension#,
+				TEXES = #texes#,
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDT_PNTTM = sysdate()
+			WHERE ESNTL_ID = #esntlId#
+
+	 ]]> 
+	    
+	</update>
+	
+	<!-- 유저 급여정보 조회 -->
+	<select id="SalaryManage.selectUserMonelyDetail" resultClass="SalaryUserMonelyVO">
+		<isEqual property="mode" compareValue="DETAIL">
+		    SELECT
+				ESNTL_ID AS esntlId,
+				EMPLYR_ID AS emplyrId,
+				USER_NM AS userNm,
+				FORMAT(TIME_SALARY,0) AS timeSalary,
+				FORMAT(JOB_TIME,0) AS jobTime,
+				FORMAT(FULL_WORKING_PENSION,0) AS fullWorkingPension,
+				FORMAT(FAMILY_PENSION,0) AS familyPension,
+				FORMAT(LONGEVITY_PENSION,0) AS longevityPension,
+				FORMAT(TEXES,0) AS texesPension
+			FROM
+				SALARYDATA
+			WHERE 
+				ESNTL_ID = #salaryUserId#
+		</isEqual>
+		<isEqual property="mode" compareValue="CAL">
+			SELECT
+				ESNTL_ID AS esntlId,
+				EMPLYR_ID AS emplyrId,
+				USER_NM AS userNm,
+				TIME_SALARY AS timeSalary,
+				JOB_TIME AS jobTime,
+				FULL_WORKING_PENSION AS fullWorkingPension,
+				FAMILY_PENSION AS familyPension,
+				LONGEVITY_PENSION AS longevityPension,
+				TEXES AS texesPension
+			FROM
+				SALARYDATA
+			WHERE 
+				ESNTL_ID = #salaryUserId#
+		</isEqual>
+
+	</select>
+
+</sqlMap>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<sqlMap resource="egovframework/sqlmap/com/mtb/MtBoardLoneMaster_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/com/mtb/MtBoardMaster_SQL_Mysql.xml"/>	
+	<sqlMap resource="egovframework/sqlmap/com/mtb/MtBoard_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/com/mtb/MtBoardUse_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/com/mtb/MtBoardAddedOptions_SQL_Mysql.xml"/>
+
+</sqlMapConfig>

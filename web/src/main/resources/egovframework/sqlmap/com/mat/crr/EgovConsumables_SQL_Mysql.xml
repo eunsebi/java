@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Consumables">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="Consumables" type="egovframework.com.mat.crr.service.Consumables"/>
+	<typeAlias  alias="ConsumablesVO" type="egovframework.com.mat.crr.service.ConsumablesVO"/>
+	<typeAlias alias="Consumption" type="egovframework.com.mat.crr.service.Consumption"/>
+	<typeAlias alias="ConsumptionVO" type="egovframework.com.mat.crr.service.ConsumptionVO"/>
+	
+	<resultMap class="egovframework.com.mat.crr.service.ConsumablesVO" id="consumablesList">
+		<result property="number" column="Number" columnIndex="1"/>
+		<result property="codeId" column="Code_ID" columnIndex="2"/>
+		<result property="code" column="Code" columnIndex="3"/>
+		<result property="dateBgnde" column="Date_Bgnde" columnIndex="4"/>
+		<result property="dateEndde" column="Date_Endde" columnIndex="5"/>
+		<result property="mcode" column="MCode" columnIndex="6"/>
+		<result property="remark" column="Remark" columnIndex="7"/>
+		<result property="qty" column="Qty" columnIndex="8"/>
+		<result property="firstRegisterId" column="FirstRegister_Id" columnIndex="9"/>
+		<result property="codeIdNm" column="CODE_ID_NM" columnIndex="10"/>
+		<result property="codeNm" column="CODE_NM" columnIndex="11"/>
+		<result property="sortOrdr" column="Sort_Ordr" columnIndex="12"/>
+	</resultMap>
+	<resultMap class="egovframework.com.mat.crr.service.ConsumablesVO" id="consumablesdDetail">
+		<result property="number" column="Number" columnIndex="1"/>
+		<result property="codeId" column="Code_ID" columnIndex="2"/>
+		<result property="code" column="Code" columnIndex="3"/>
+		<result property="dateBgnde" column="Date_Bgnde" columnIndex="4"/>
+		<result property="dateEndde" column="Date_Endde" columnIndex="5"/>
+		<result property="mcode" column="MCode" columnIndex="6"/>
+		<result property="remark" column="Remark" columnIndex="7"/>
+		<result property="qty" column="Qty" columnIndex="8"/>
+		<result property="firstRegisterId" column="FirstRegister_Id" columnIndex="9"/>
+		<result property="firstRegisterPnttm" column="FirstRegister_Pnttm" columnIndex="10"/>
+		<result property="frstRegisterNm" column="FRST_REGISTER_NM" columnIndex="11"/>
+		<result property="codeNm" column="CODE_NM" columnIndex="12"/>
+		<result property="sCodeNm" column="SCODE_NM" columnIndex="13"/>
+		<result property="sdCodeNm" column="SDCODE_NM" columnIndex="13"/>
+	</resultMap>
+
+	<resultMap class="egovframework.com.mat.crr.service.ConsumptionVO" id="consumptionAllList">
+		<result property="number" column="Number" columnIndex="1"/>
+		<result property="codeId" column="Code_ID" columnIndex="2"/>
+		<result property="code" column="Code" columnIndex="3"/>
+		<result property="qty" column="Qty" columnIndex="4"/>
+		<result property="mcodeId" column="MCode_Id" columnIndex="5"/>
+		<result property="mcode" column="MCode" columnIndex="6"/>
+		<result property="sortOrdr" column="Sort_Ordr" columnIndex="7"/>
+		<result property="codeNm" column="CODE_NM" columnIndex="8"/>
+		<result property="remark" column="Remark" columnIndex="9"/>
+		<result property="date" column="Date" columnIndex="10"/>
+		<result property="firstRegisterId" column="FirstRegister_Id" columnIndex="11"/>
+		<result property="firstRegisterPnttm" column="FirstRegister_Pnttm" columnIndex="12"/>
+		<result property="mCodeNm" column="mCodeNm" columnIndex="13"/>
+	</resultMap>
+		
+	<resultMap class="egovframework.com.mat.crr.service.ConsumptionVO" id="consumptionList">
+		<result property="number" column="Number" columnIndex="1"/>
+		<result property="codeId" column="Code_ID" columnIndex="2"/>
+		<result property="code" column="Code" columnIndex="3"/>
+		<result property="qty" column="Qty" columnIndex="4"/>
+		<result property="mcodeId" column="MCode_Id" columnIndex="5"/>
+		<result property="mcode" column="MCode" columnIndex="6"/>
+		<result property="sortOrdr" column="Sort_Ordr" columnIndex="7"/>
+		<result property="codeNm" column="CODE_NM" columnIndex="8"/>
+		<result property="remark" column="Remark" columnIndex="9"/>
+		<result property="date" column="Date" columnIndex="10"/>
+		<result property="firstRegisterId" column="FirstRegister_Id" columnIndex="11"/>
+		<result property="firstRegisterPnttm" column="FirstRegister_Pnttm" columnIndex="12"/>
+	</resultMap>
+	<resultMap class="egovframework.com.mat.crr.service.ConsumptionVO" id="consumptionDetial">
+		<result property="number" column="Number" columnIndex="1"/>
+		<result property="codeId" column="Code_ID" columnIndex="2"/>
+		<result property="code" column="Code" columnIndex="3"/>
+		<result property="qty" column="Qty" columnIndex="4"/>
+		<result property="mcodeId" column="MCode_Id" columnIndex="5"/>
+		<result property="mcode" column="MCode" columnIndex="6"/>
+		<result property="sortOrdr" column="Sort_Ordr" columnIndex="7"/>
+		<result property="codeNm" column="CODE_NM" columnIndex="8"/>
+		<result property="sCodeNm" column="SCODE_NM" columnIndex="9"/>
+		<result property="remark" column="Remark" columnIndex="10"/>
+		<result property="date" column="Date" columnIndex="11"/>
+		<result property="firstRegisterId" column="FirstRegister_Id" columnIndex="12"/>
+		<result property="firstRegisterPnttm" column="FirstRegister_Pnttm" columnIndex="13"/>
+		<result property="frstRegisterNm" column="FRST_REGISTER_NM" columnIndex="14"/>
+		<result property="changeQty" column="Change_Qty" columnIndex="15"/>
+		<result property="inQty" column="In_Qty" columnIndex="16"/>
+	</resultMap>	
+
+	<select id="ConsumablesManageDAO.selectMaxNumber" resultClass="java.lang.Long">
+ 		<![CDATA[
+			SELECT IFNULL(MAX(NUMBER),0)+1 AS NUMBER  FROM CONSUMABLES
+ 		]]>
+ 	</select>
+ 	
+ 	<!-- 게시물 삽입 -->
+	<insert id="ConsumablesManageDAO.insertBoardArticle" parameterClass="Consumables">
+		<selectKey resultClass="java.lang.Long" keyProperty="nttNo">
+			SELECT IFNULL(MAX(SORT_ORDR),0)+1 AS NUMBER  FROM CONSUMABLES
+			WHERE Code_ID = #codeId#
+		</selectKey>
+		<selectKey resultClass="java.lang.Long" keyProperty="numberNo">
+			SELECT IFNULL(MAX(NUMBER),0)+1 AS NUMBER  FROM CONSUMABLES
+			WHERE Code_ID = #codeId#
+		</selectKey>
+		
+		<![CDATA[
+			INSERT INTO CONSUMABLES
+			(NUMBER, Code_ID,
+			 Code, 
+			 DATE_BGNDE, DATE_ENDDE,
+			 MCode, REMARK, Qty, SORT_ORDR, FACTORY,
+			 FirstRegister_Id, FirstRegister_Pnttm
+			 )
+			VALUES
+			( #number#, #codeId#,
+			  #code#,
+			  #dateBgnde#, #dateEndde#,
+			  #mcode#, #remark#, #qty#, #nttNo#, #factory#,
+			  #firstRegisterId#, SYSDATE()
+			 )			
+		]]>
+	
+	</insert>
+	
+	<!-- 종류별 List -->
+	<select id="ConsumablesManageDAO.selectBoardArticleList" parameterClass="ConsumablesVO" resultMap="consumablesList">
+		<![CDATA[
+			SELECT
+				a.Number,
+				a.Code_ID,
+				a.Code,
+				DATE_FORMAT(a.Date_Bgnde,'%Y-%m-%d') Date_Bgnde,
+				DATE_FORMAT(a.Date_Endde,'%Y-%m-%d') Date_Endde,
+				a.MCode,
+				a.Remark,
+				a.Qty,
+				a.Sort_Ordr,
+				a.FirstRegister_Id,
+				a.FirstRegister_Pnttm,
+		        b.CODE_ID_NM,
+		        c.CODE_NM
+					FROM
+						consumables a
+		          LEFT OUTER JOIN
+		            comtccmmncode b
+		          ON a.Code_ID = b.CODE_ID
+		          LEFT OUTER JOIN
+		            comtccmmndetailcode c
+		          ON a.Code_ID = c.CODE_ID and a.MCode = c.CODE
+		        WHERE(a.MCode,a.FirstRegister_Pnttm)
+			IN (
+				SELECT a.MCode, MAX(a.FirstRegister_Pnttm)
+				FROM
+					consumables a
+				WHERE
+					a.Code_ID =  #codeId# and a.Factory = #factory#
+				GROUP BY
+					a.MCode
+				)
+		]]>
+	
+<!-- 			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.NTT_SJ LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.NTT_CN LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual>	
+			<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	b.USER_NM LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual> -->				
+		<![CDATA[			
+			ORDER BY MCode ASC, Number ASC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>	
+	</select>
+	
+	<select id="ConsumablesManageDAO.selectBoardArticleListCnt" parameterClass="ConsumablesVO" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT
+				COUNT(Number)
+			FROM
+				CONSUMABLES
+			WHERE
+				Code_ID = #codeId# and Factory = #factory#
+		]]>
+<!-- 			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.NTT_SJ LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.NTT_CN LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual>	
+			<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	b.USER_NM LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual>	 -->
+	</select>
+
+	<select id="ConsumablesManageDAO.selectBoardArticle" parameterClass="ConsumablesVO" resultMap="consumablesdDetail" >
+		<![CDATA[
+			SELECT
+				a.Number,
+				a.Code_ID,
+				a.Code,
+				a.Qty,
+				a.MCode,
+				a.Sort_Ordr,
+				a.Remark,
+				DATE_FORMAT(a.Date_Bgnde,'%Y-%m-%d') Date_Bgnde,
+				DATE_FORMAT(a.Date_Endde,'%Y-%m-%d') Date_Endde,
+				a.FirstRegister_Id,
+				a.FirstRegister_Pnttm,
+				d.USER_NM as FRST_REGISTER_NM,
+				b.CODE_NM,
+				c.CODE_ID_NM as SCODE_NM,
+				E.CODE_NM as SDCODE_NM
+			FROM consumables a
+				LEFT OUTER JOIN
+					comtccmmndetailcode b
+					ON a.Code_Id = b.CODE_ID and a.Mcode = b.CODE
+				LEFT OUTER JOIN
+					COMTCCMMNCODE c
+					ON a.Code_Id = c.CODE_ID
+				LEFT OUTER JOIN
+					COMVNUSERMASTER d
+					ON a.FirstRegister_Id = d.ESNTL_ID
+				LEFT OUTER JOIN
+					COMTCCMMNDETAILCODE E
+					ON E.CODE_ID = 'COM300' and a.Code = E.CODE
+			WHERE
+				Number = #number#
+		]]>				
+	</select>
+
+	<!-- 설비별 게시물 List -->
+	<select id="ConsumablesManageDAO.selectBoardMachineList" parameterClass="ConsumablesVO" resultMap="consumablesList">
+		<![CDATA[
+			SELECT
+				a.Number,
+				a.Code_ID,
+				a.Code,
+				DATE_FORMAT(a.Date_Bgnde,'%Y-%m-%d') Date_Bgnde,
+				DATE_FORMAT(a.Date_Endde,'%Y-%m-%d') Date_Endde,
+				a.MCode,
+				a.Remark,
+				a.Qty,
+				a.Sort_Ordr,
+				a.FirstRegister_Id,
+				a.FirstRegister_Pnttm,
+				a.USE_AT,
+		        b.CODE_ID_NM,
+		        c.CODE_NM
+			FROM
+				consumables a
+		          LEFT OUTER JOIN
+		            comtccmmncode b
+		          ON a.Code_ID = b.CODE_ID
+		          LEFT OUTER JOIN
+		            comtccmmndetailcode c
+		          ON a.Code_ID = c.CODE_ID and a.MCode = c.CODE
+		   WHERE a.Code_ID = #codeId# and a.MCode = #mcode# and a.factory = #factory#
+		]]>
+	
+<!-- 			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.NTT_SJ LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.NTT_CN LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual>	
+			<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	b.USER_NM LIKE CONCAT ('%', #searchWrd#,'%') 		]]>
+			</isEqual> -->				
+		<![CDATA[			
+			ORDER BY SORT_ORDR DESC, Number ASC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>	
+	</select>
+	
+	<select id="ConsumablesManageDAO.selectMachineName" parameterClass="String"  resultClass="java.lang.String">
+		SELECT
+		  CODE_ID_NM
+		FROM
+		  COMTCCMMNCODE
+		WHERE CODE_ID = #codeId#
+	</select>
+	
+	<select id="ConsumablesManageDAO.selectConsumptionBoardArticleListCnt" parameterClass="ConsumptionVO" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*) AS totcnt
+				FROM consumablesconsumption a
+					WHERE(a.code, a.FirstRegister_Pnttm)
+						IN (
+							SELECT a.Code, MAX(a.FirstRegister_Pnttm)
+								FROM consumablesconsumption a where a.Factory = 'ORGNZT_0000000000000'
+								GROUP BY a.code 
+							)
+		
+		]]>
+<!-- 			SELECT COUNT(*) AS totcnt
+			FROM consumablesconsumption
+			WHERE MCode_Id = 'COM300' and Factory = #factory# -->
+	</select>
+	
+	<select id="ConsumablesManageDAO.selectConsumptionList" parameterClass="ConsumptionVO" resultMap="consumptionAllList">
+		<![CDATA[
+		SELECT
+		  a.Number,
+		  a.Code_ID,
+		  a.Code,
+		  a.Qty,
+		  a.Mcode_Id,
+		  a.MCode,
+		  a.Sort_Ordr,
+		  a.Remark,
+		  DATE_FORMAT(a.Date,'%Y-%m-%d') Date,
+		  a.FirstRegister_Id,
+		  a.FirstRegister_Pnttm,
+		  b.CODE_NM,
+		  c.CODE_NM as mCodeNm
+		  
+		  FROM consumablesconsumption a
+		  	LEFT OUTER JOIN
+		        comtccmmndetailcode c
+            ON a.MCode_Id = c.CODE_ID and a.MCode = c.CODE
+		    LEFT OUTER JOIN
+		        comtccmmndetailcode b
+		        ON a.Code = b.CODE
+		          WHERE(a.code, a.FirstRegister_Pnttm)
+		            IN (
+		              SELECT a.Code, MAX(a.FirstRegister_Pnttm)
+		              FROM consumablesconsumption a where a.Factory = #factory#
+		              GROUP BY a.code 
+		            )
+
+		]]>
+	
+		<![CDATA[			
+			ORDER BY a.Qty ASC, a.Number ASC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>
+		
+<!-- 		<![CDATA[			
+			ORDER BY a.code ASC, a.Number ASC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]> -->
+	</select>
+	
+	<select id="ConsumablesManageDAO.selectairthemeticMode" parameterClass="Consumption" resultClass="ConsumptionVO">
+		SELECT
+		  Number,
+		  Code_ID,
+		  Code,
+		  QTY,
+		  Sort_Ordr,
+		  Remark,
+		  Date,
+		  FirstRegister_Id,
+		  FirstRegister_Pnttm
+		FROM
+			CONSUMABLESCONSUMPTION
+		WHERE
+			Code = #code#  and Factory = #factory# ORDER BY FirstRegister_Pnttm DESC LIMIT 1
+	</select>
+	<select id="ConsumablesManageDAO.selectairthemeticMode2" parameterClass="Consumables" resultClass="ConsumptionVO">
+		SELECT
+		  Number,
+		  Code_ID,
+		  Code,
+		  QTY,
+		  Sort_Ordr,
+		  Remark,
+		  Date,
+		  FirstRegister_Id,
+		  FirstRegister_Pnttm
+		FROM
+			CONSUMABLESCONSUMPTION
+		WHERE
+			Code = #code#  and Factory = #factory# ORDER BY FirstRegister_Pnttm DESC LIMIT 1
+	</select>
+<!-- 유포지 재고현황 -->
+
+	<select id="ConsumablesManageDAO.selectConsumptionMaxNumber" resultClass="java.lang.Long">
+ 		<![CDATA[
+			SELECT IFNULL(MAX(NUMBER),0)+1 AS NUMBER  FROM CONSUMABLESCONSUMPTION
+ 		]]>
+ 	</select>
+ 	
+ 	<!-- 게시물 삽입 -->
+	<insert id="ConsumablesManageDAO.insertCnsumptionBoardArticle" parameterClass="Consumption">
+		<selectKey resultClass="java.lang.Long" keyProperty="nttNo">
+			SELECT IFNULL(MAX(SORT_ORDR),0)+1 AS NUMBER  FROM CONSUMABLESCONSUMPTION
+			WHERE Code = #code#
+		</selectKey>
+		
+		<![CDATA[
+			INSERT INTO CONSUMABLESCONSUMPTION
+			(Number,
+			 Code_ID,
+			 Code,
+			 Qty,
+			 In_Qty,
+			 MCode_Id,
+			 MCode,
+			 Change_Qty,
+			 Sort_Ordr,
+			 Remark,
+			 Date,
+			 Factory,
+			 FirstRegister_Id,
+			 FirstRegister_Pnttm
+			 )
+			VALUES
+			( #number#,
+			  #codeId#,
+			  #code#,
+			  #qty#,
+			  #inQty#,
+			  #mcodeId#,
+			  #mcode#,
+			  #changeQty#,
+			  #nttNo#,
+			  #remark#,
+			  #date#,
+			  #factory#,
+			  #firstRegisterId#,
+			  SYSDATE()
+			 )			
+		]]>
+	</insert>
+	
+	<select id="consumablesManageDAO.selectMaterialConsumablesCode" parameterClass="ConsumptionVO" resultMap="consumptionList">
+		<![CDATA[
+			SELECT
+			  a.Number,
+			  a.Code_ID,
+			  a.Code,
+			  a.Qty,
+		      a.MCode_Id,
+		      a.MCode,
+			  a.Sort_Ordr,
+			  a.Remark,
+			  DATE_FORMAT(a.Date,'%Y-%m-%d') Date,
+			  a.FirstRegister_Id,
+			  a.FirstRegister_Pnttm,
+			  b.CODE_NM
+		  	FROM consumablesconsumption a
+			    LEFT OUTER JOIN
+			        comtccmmndetailcode b
+			        ON a.MCode_Id = b.CODE_ID and a.Mcode = b.CODE
+			WHERE
+	          a.code = #code# and a.factory = #factory#
+		]]>
+	
+		<![CDATA[			
+			ORDER BY Number DESC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>
+	</select>	
+
+	<select id="consumablesManageDAO.selectMaterialConsumablesCodeCnt" parameterClass="ConsumptionVO" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT
+				COUNT(Number)
+			FROM
+				consumablesconsumption
+			WHERE code = #code#
+		]]>
+	</select>
+
+	<select id="consumablesManageDAO.selectConsumptionBoardArticle" parameterClass="ConsumptionVO" resultMap="consumptionDetial">
+		<![CDATA[
+			SELECT
+			  a.Number,
+			  a.Code_ID,
+			  a.Code,
+			  a.Qty,
+			  a.In_Qty,
+		      a.MCode_Id,
+		      a.MCode,
+		      a.Change_Qty,
+			  a.Sort_Ordr,
+			  a.Remark,
+			  DATE_FORMAT(a.Date,'%Y-%m-%d') Date,
+			  a.FirstRegister_Id, d.USER_NM as FRST_REGISTER_NM,
+			  a.FirstRegister_Pnttm,
+			  b.CODE_NM,
+			  c.CODE_NM as SCODE_NM
+		  	FROM consumablesconsumption a
+			    LEFT OUTER JOIN
+			        comtccmmndetailcode b
+			        ON a.MCode_Id = b.CODE_ID and a.Mcode = b.CODE
+          	LEFT OUTER JOIN
+              	comtccmmndetailcode c
+              	ON a.Code_ID = c.CODE_ID and a.Code = c.CODE
+            LEFT OUTER JOIN
+    			COMVNUSERMASTER d
+		    	ON a.FirstRegister_Id = d.ESNTL_ID 
+			WHERE
+	          a.number = #number#
+		]]>
+	</select>
+	
+	<delete id="consumablesManageDAO.selectMaterialDeleteConsumables" parameterClass="Consumption">
+ 		<![CDATA[
+			UPDATE consumablesconsumption SET 
+				Remark = #remark#,
+				USE_AT = 'N',
+				LastRegister_Id = #lastUpdusrId#,
+				LastRegister_Pnttm = SYSDATE()
+			WHERE Number = #number#
+ 		]]>
+	</delete>
+	
+<!--  	<update id="consumablesManageDAO.selectMaterialDeleteConsumables" parameterClass="Consumption">
+ 		<![CDATA[
+			UPDATE consumablesconsumption SET 
+				Remark = #remark#,
+				FirstRegister_Id = #firstRegisterId#,
+				FirstRegister_Pnttm = SYSDATE()
+			WHERE Number = #number#
+ 		]]>
+ 	</update> -->
+ 	
+	<select id="consumptionDAO.selectCodeNm" parameterClass="String" resultClass="java.lang.String">
+		<![CDATA[
+			SELECT
+			  CODE_NM
+			FROM
+				COMTCCMMNDETAILCODE
+		    WHERE
+		      CODE = #code#
+		]]>
+	</select>
+ 	
+ 	<update id="consumptionDAO.updateMaterialConsumablesCode" parameterClass="Consumption">
+ 		<![CDATA[
+			UPDATE
+				consumablesconsumption
+			SET
+				In_Qty = #inQty#,
+				Date = #date#,
+				Remark = #remark#,
+				LastRegister_Id = #lastUpdusrId#,
+				LastRegister_Pnttm = SYSDATE()
+			WHERE
+				Number = #number#
+		]]>
+ 	</update>
+ 	
+ 	<update id="consumptionDAO.updateMaterialCreanRollerCode" parameterClass="Consumables">
+ 		<![CDATA[
+			UPDATE
+				consumables
+			SET
+				Qty = #qty#,
+				Date_Bgnde = #dateBgnde#,
+				Code = #code#,
+				Remark = #remark#,
+				LastRegister_Id = #lastUpdusrId#,
+				LastRegister_Pnttm = SYSDATE()
+			WHERE
+				Number = #number#
+		]]>
+ 	</update>
+ 	
+ 	<!-- MainPage(EgovMainView) List -->
+ 		<select id="ConsumablesManageDAO.selectMainPageConsumablesAllList" parameterClass="ConsumptionVO" resultMap="consumptionAllList">
+		<![CDATA[
+		SELECT
+		  a.Number,
+		  a.Code_ID,
+		  a.Code,
+		  a.Qty,
+		  a.Mcode_Id,
+		  a.MCode,
+		  a.Sort_Ordr,
+		  a.Remark,
+		  DATE_FORMAT(a.Date,'%Y-%m-%d') Date,
+		  a.FirstRegister_Id,
+		  a.FirstRegister_Pnttm,
+		  b.CODE_NM,
+		  c.CODE_NM as mCodeNm
+		  
+		  FROM consumablesconsumption a
+		  	LEFT OUTER JOIN
+		        comtccmmndetailcode c
+            ON a.MCode_Id = c.CODE_ID and a.MCode = c.CODE
+		    LEFT OUTER JOIN
+		        comtccmmndetailcode b
+		        ON a.Code = b.CODE
+		          WHERE(a.code, a.FirstRegister_Pnttm )
+		            IN (
+		              SELECT a.Code, MAX(a.FirstRegister_Pnttm)
+		              FROM consumablesconsumption a where a.Factory = #factory#
+		              GROUP BY a.code 
+		            )
+
+		]]>
+	
+		<![CDATA[			
+			ORDER BY a.qty
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>
+	</select>
+ 	
+</sqlMap>            
